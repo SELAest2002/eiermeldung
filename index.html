@@ -335,14 +335,16 @@ function hideWarn(){$("#warn").classList.remove("show");}
 
 /* ---------- Senden ---------- */
 $("#send").onclick=async ()=>{
+  const f=state.farm?CONFIG.farms[state.farm]:null;
+  if(!f){ $("#warn").textContent="Bitte zuerst deinen Betrieb wählen."; $("#warn").classList.add("show"); $("#pick").classList.add("show"); return; }
   const pRaw=$("#pv").value.trim(), wRaw=$("#wv").value.trim();
   const p=pRaw===""?null:Math.max(0,parseInt(pRaw,10));
   const w=wRaw===""?null:Math.max(0,parseInt(wRaw,10));
-  if(!state.day || (p===null && w===null)){ $("#warn").classList.add("show"); return; }
+  if(!state.day || (p===null && w===null)){ $("#warn").textContent="Bitte einen Tag und mindestens eine Menge angeben."; $("#warn").classList.add("show"); return; }
 
   const wk=loadWeek(); const prev=wk[state.day]||null;
   const corr = !!prev && ((prev.p??null)!==p || (prev.w??null)!==w);
-  const f=CONFIG.farms[state.farm]; const sheet="AL "+state.day;
+  const sheet="AL "+state.day;
   const calls=[];
   if(p!==null) calls.push({cell:CONFIG.colPremium+f.row, value:p});
   if(w!==null) calls.push({cell:CONFIG.colWiesen+f.row, value:w});
@@ -352,7 +354,8 @@ $("#send").onclick=async ()=>{
     if(!CONFIG.demo){
       for(const c of calls){
         const url=`${CONFIG.webhook}?spreadsheet_id=${encodeURIComponent(CONFIG.spreadsheetId)}&sheet=${encodeURIComponent(sheet)}&cell=${c.cell}&value=${c.value}&betrieb=${encodeURIComponent(state.farm)}&korrektur=${corr?1:0}`;
-        await fetch(url,{mode:"no-cors"});
+        try{ await fetch(url,{mode:"no-cors"}); }
+        catch(err){ await new Promise(res=>{ const img=new Image(); img.onload=img.onerror=res; img.src=url; setTimeout(res,4000); }); }
       }
     }else{
       calls.forEach(c=>console.log("[DEMO] würde senden:",
@@ -365,7 +368,7 @@ $("#send").onclick=async ()=>{
     renderWeek();
     showDone(p,w,{corr,prev});
   }catch(e){
-    $("#warn").textContent="Senden hat nicht geklappt – nochmal versuchen."; $("#warn").classList.add("show");
+    $("#warn").textContent="Senden hat nicht geklappt – bitte Internet prüfen und nochmal."; $("#warn").classList.add("show");
   }finally{
     $("#send").disabled=false; $("#send").textContent="Meldung senden";
   }
