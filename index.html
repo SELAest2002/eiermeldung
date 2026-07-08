@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#e3973d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Eiermeldung">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23e3973d'/%3E%3Cellipse cx='50' cy='54' rx='24' ry='30' fill='%23fff'/%3E%3C/svg%3E">
+<title>Wanderhuhn · Eiermeldung</title>
+<style>
+:root{
+  --bg:#f4efe6; --card:#fff; --ink:#211c17; --ink2:#6c6255; --muted:#988d7c;
+  --line:#e7dfd1; --brand:#e3973d; --branddk:#c2762a; --brand2:#f7b25c;
+  --good:#2f9e63; --goodbg:#e6f4ec; --shadow:0 10px 30px rgba(70,50,20,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;display:flex;justify-content:center}
+.app{width:100%;max-width:460px;min-height:100%;display:flex;flex-direction:column;
+  background:var(--bg);position:relative;padding-bottom:104px}
+@media(min-width:480px){.app{box-shadow:var(--shadow);margin:0 auto}}
+
+/* header */
+header{padding:22px 22px 8px;display:flex;align-items:center;gap:13px}
+.logo{width:44px;height:44px;border-radius:13px;flex:0 0 auto;display:grid;place-items:center;
+  background:linear-gradient(150deg,var(--brand2),var(--branddk));box-shadow:0 6px 16px rgba(227,151,61,.32)}
+.logo svg{width:26px;height:26px}
+.htxt .t{font-weight:800;font-size:18px;letter-spacing:-.3px}
+.htxt .s{color:var(--muted);font-size:12.5px;margin-top:1px}
+
+/* greeting card */
+.hello{margin:14px 18px 6px;background:linear-gradient(160deg,#fff,#fbf5ea);
+  border:1px solid var(--line);border-radius:20px;padding:18px 20px;box-shadow:var(--shadow)}
+.hello .hi{font-size:22px;font-weight:800;letter-spacing:-.4px}
+.hello .kw{display:inline-flex;align-items:center;gap:7px;margin-top:8px;background:#fbeede;
+  color:var(--branddk);font-weight:700;font-size:13.5px;padding:6px 12px;border-radius:999px}
+.hello .chg{float:right;color:var(--brand);font-size:12.5px;font-weight:700;text-decoration:none;margin-top:4px}
+
+/* sections */
+.sec{margin:18px 18px 0}
+.sec>.lbl{font-size:13px;font-weight:750;letter-spacing:.3px;text-transform:uppercase;color:var(--muted);margin:0 4px 10px}
+
+/* day chips */
+.days{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+.day{height:60px;border-radius:16px;border:1.5px solid var(--line);background:var(--card);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;
+  transition:transform .12s,border-color .15s,background .15s;font-weight:700}
+.day .dd{font-size:16px}
+.day .dn{font-size:10.5px;color:var(--muted);font-weight:600}
+.day:active{transform:scale(.95)}
+.day.on{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:0 8px 18px rgba(227,151,61,.34)}
+.day.on .dn{color:#fff8ee}
+
+/* amount cards */
+.amt{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 16px 18px;
+  box-shadow:var(--shadow);margin-bottom:14px}
+.amt .top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.amt .em{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:20px}
+.amt.p .em{background:#fbeede}.amt.w .em{background:#e9f2e4}
+.amt .nm{font-weight:750;font-size:17px}
+.amt .hint{color:var(--muted);font-size:12px;margin-top:1px;font-weight:500}
+.stepper{display:grid;grid-template-columns:60px 1fr 60px;gap:12px;align-items:center}
+.stepper button{height:60px;border-radius:15px;border:1.5px solid var(--line);background:#faf6ef;
+  font-size:30px;font-weight:600;color:var(--branddk);cursor:pointer;line-height:1;transition:transform .1s,background .15s}
+.stepper button:active{transform:scale(.92);background:#f2e7d6}
+.stepper input{width:100%;height:64px;border:none;background:#f7f2e9;border-radius:15px;text-align:center;
+  font-size:32px;font-weight:800;color:var(--ink);letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.stepper input::placeholder{color:#cbbfab;font-weight:700}
+.stepper input:focus{outline:2px solid var(--brand);background:#fff}
+
+/* Wochenübersicht */
+.wk{display:flex;flex-direction:column;gap:8px}
+.wkrow{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px 13px}
+.wkrow .d{width:34px;height:34px;border-radius:10px;background:#fbeede;color:var(--branddk);display:grid;place-items:center;font-weight:800;font-size:13px;flex:0 0 auto}
+.wkrow .vv{flex:1;font-size:14.5px;font-weight:650;color:var(--ink)}
+.wkrow .vv small{color:var(--muted)}
+.wkrow .bdg{font-size:10px;font-weight:800;color:#b06a1f;background:#f6e2c6;border-radius:999px;padding:3px 8px;text-transform:uppercase;letter-spacing:.4px}
+.wkrow .ed{color:var(--brand);font-weight:800;font-size:13.5px;cursor:pointer;background:none;border:none;padding:6px 4px}
+.done .sum s{color:var(--muted);font-weight:600;margin-right:3px}
+
+/* submit bar */
+.bar{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;
+  padding:14px 18px calc(16px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,rgba(244,239,230,0),var(--bg) 34%)}
+.bar .inner{width:100%;max-width:424px}
+.send{width:100%;height:62px;border:none;border-radius:18px;background:var(--brand);color:#fff;
+  font-size:19px;font-weight:800;letter-spacing:.2px;cursor:pointer;box-shadow:0 10px 24px rgba(227,151,61,.4);
+  display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .12s,background .15s}
+.send:active{transform:scale(.98);background:var(--branddk)}
+.send:disabled{background:#d8cdba;box-shadow:none;color:#fbf7ef}
+.warn{color:#c25a3a;font-size:13px;font-weight:600;text-align:center;margin-bottom:10px;min-height:0;
+  opacity:0;transition:opacity .2s}
+.warn.show{opacity:1}
+
+/* confirmation */
+.done{position:fixed;inset:0;background:linear-gradient(180deg,#fff,#f4efe6);z-index:50;
+  display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px}
+.done.show{display:flex;animation:fade .35s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.check{width:104px;height:104px;border-radius:50%;background:var(--goodbg);display:grid;place-items:center;margin-bottom:22px;
+  animation:pop .5s cubic-bezier(.2,.8,.2,1.2) both}
+@keyframes pop{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.check svg{width:56px;height:56px}
+.check svg path{stroke:var(--good);stroke-width:8;fill:none;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:90;stroke-dashoffset:90;animation:draw .5s .2s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.done h2{font-size:26px;font-weight:820;letter-spacing:-.5px}
+.done .sum{margin:16px 0 4px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 22px;
+  box-shadow:var(--shadow);min-width:250px}
+.done .sum .r{display:flex;justify-content:space-between;gap:26px;padding:7px 0;font-size:16px}
+.done .sum .r+.r{border-top:1px solid var(--line)}
+.done .sum .r b{font-weight:800}
+.done .sum .r .k{color:var(--ink2)}
+.done .msg{color:var(--ink2);font-size:14px;margin:14px 0 26px;max-width:30ch;line-height:1.5}
+.done .acts{display:flex;gap:12px}
+.btn2{height:52px;padding:0 22px;border-radius:14px;font-size:15.5px;font-weight:750;cursor:pointer;border:1.5px solid var(--line);background:#fff;color:var(--ink)}
+.btn2.pri{background:var(--brand);border-color:var(--brand);color:#fff}
+.demoTag{position:fixed;top:0;left:0;right:0;background:#2b2620;color:#f7b25c;font-size:11.5px;font-weight:700;
+  text-align:center;padding:5px;letter-spacing:.4px;z-index:60;display:none}
+.demoTag.show{display:block}
+.demoTag+ .app,.demoTag.show ~ .app{}
+
+/* farm picker */
+.pick{position:fixed;inset:0;background:rgba(30,24,18,.5);z-index:70;display:none;align-items:flex-end;justify-content:center}
+.pick.show{display:flex;animation:fade .25s ease}
+.pick .sheet{background:#fff;width:100%;max-width:460px;border-radius:24px 24px 0 0;padding:22px 20px calc(24px + env(safe-area-inset-bottom));max-height:82vh;overflow:auto}
+.pick h3{font-size:19px;font-weight:800;margin-bottom:4px}
+.pick p{color:var(--ink2);font-size:13.5px;margin-bottom:14px}
+.pick .grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.pick .grid button{height:50px;border-radius:13px;border:1.5px solid var(--line);background:#faf6ef;font-weight:700;font-size:14.5px;cursor:pointer;color:var(--ink)}
+.pick .grid button:active{background:#f0e6d5}
+footer{color:var(--muted);font-size:11px;text-align:center;padding:20px}
+</style>
+</head>
+<body>
+<div class="demoTag" id="demoTag">DEMO – es wird noch nichts in die Tabelle geschrieben</div>
+
+<div class="app">
+  <header>
+    <div class="logo"><svg viewBox="0 0 100 100"><ellipse cx="50" cy="55" rx="30" ry="37" fill="#fff"/><ellipse cx="50" cy="55" rx="30" ry="37" fill="none" stroke="#fff" stroke-width="0"/><path d="M50 20c9 14 16 22 16 33a16 16 0 0 1-32 0c0-11 7-19 16-33z" fill="#fff" opacity=".0"/></svg></div>
+    <div class="htxt"><div class="t">Eiermeldung</div><div class="s">Wanderhuhn · Kommissionierung</div></div>
+  </header>
+
+  <div class="hello">
+    <a class="chg" id="changeFarm" href="#">Betrieb wechseln</a>
+    <div class="hi" id="greet">Servus 👋</div>
+    <div class="kw" id="kw">Kalenderwoche –</div>
+  </div>
+
+  <div class="sec" id="weekSec" style="display:none">
+    <div class="lbl">Diese Woche gemeldet</div>
+    <div class="wk" id="weekList"></div>
+  </div>
+
+  <div class="sec">
+    <div class="lbl">Für welchen Liefertag?</div>
+    <div class="days" id="days"></div>
+  </div>
+
+  <div class="sec">
+    <div class="lbl">Wie viele Eier?</div>
+    <div class="amt p">
+      <div class="top"><div class="em">🥚</div><div><div class="nm">Premium-Eier</div><div class="hint">leer lassen = nicht melden</div></div></div>
+      <div class="stepper">
+        <button type="button" data-t="p" data-d="-1">−</button>
+        <input id="pv" type="number" inputmode="numeric" min="0" step="60" placeholder="—">
+        <button type="button" data-t="p" data-d="1">+</button>
+      </div>
+    </div>
+    <div class="amt w">
+      <div class="top"><div class="em">🌿</div><div><div class="nm">Wieseneier</div><div class="hint">leer lassen = nicht melden</div></div></div>
+      <div class="stepper">
+        <button type="button" data-t="w" data-d="-1">−</button>
+        <input id="wv" type="number" inputmode="numeric" min="0" step="60" placeholder="—">
+        <button type="button" data-t="w" data-d="1">+</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>Wanderhuhn Eiermeldung · v1.0</footer>
+</div>
+
+<div class="bar"><div class="inner">
+  <div class="warn" id="warn">Bitte einen Tag und mindestens eine Menge angeben.</div>
+  <button class="send" id="send">Meldung senden</button>
+</div></div>
+
+<!-- Confirmation -->
+<div class="done" id="done">
+  <div class="check"><svg viewBox="0 0 100 100"><path d="M26 52l16 16 32-34"/></svg></div>
+  <h2 id="doneTitle">Danke!</h2>
+  <div class="sum" id="doneSum"></div>
+  <div class="msg" id="doneMsg">Deine Meldung ist bei der Kommissionierung angekommen.</div>
+  <div class="acts">
+    <button class="btn2" id="editAgain">Ändern</button>
+    <button class="btn2 pri" id="newOne">Fertig</button>
+  </div>
+</div>
+
+<!-- Farm picker -->
+<div class="pick" id="pick"><div class="sheet">
+  <h3>Welcher Betrieb bist du?</h3>
+  <p>Einmal auswählen – die App merkt es sich. (Am besten bekommst du einen fertigen Link mit deinem Betrieb.)</p>
+  <div class="grid" id="pickGrid"></div>
+</div></div>
+
+<script>
+/* ============================================================
+   KONFIGURATION  – hier alles Wichtige an einer Stelle
+   ============================================================ */
+const CONFIG = {
+  // DEMO=true: es wird NICHTS geschrieben, nur die Bestätigung gezeigt (sicher zum Herzeigen).
+  // Auf false stellen, sobald live in die Kommissionierung geschrieben werden soll.
+  // LIVE-TEST aktiv: schreibt in die Test-Kopie, NICHT in die echte Kommissionierung.
+  // Fuer Produktion: demo:false lassen und spreadsheetId auf die echte KW-Datei setzen.
+  demo: false,
+  webhook: "https://hook.eu1.make.com/xwwe55ab32tfx55076fsovxbsa12prun",
+  spreadsheetId: "1BK4lf-GU6c0YhWq5IXmVXcMaT0542fOZ9ZbrJJ5ZmyQ", // Kommissionierung_TEST_App (Sandbox)
+  colPremium: "H", colWiesen: "I",
+  stepP: 60, stepW: 60,
+  // Betrieb -> Zeile im Sheet + Standard-Liefertag (aus den Stammdaten)
+  farms: {
+    "Emathinger":{row:8,day:"Mo"}, "Petscharnig":{row:10,day:"Do"}, "Gölzner":{row:13,day:""},
+    "Rechling":{row:18,day:""}, "Rapatz":{row:21,day:"Do"}, "Brandner":{row:25,day:""},
+    "Schwab":{row:26,day:""}, "Brandhuber":{row:27,day:""}, "Gschwendtner":{row:28,day:""},
+    "Spitzer":{row:29,day:""}, "Schinwald":{row:30,day:""}, "Lugstein":{row:31,day:""},
+    "Hofer":{row:35,day:""}, "Hutterer":{row:36,day:""}, "Denk":{row:40,day:""},
+    "Hofmann":{row:41,day:""}, "Berer":{row:42,day:""}, "Spitaler":{row:43,day:""},
+    "Habetswallner":{row:44,day:""}, "Rögl":{row:45,day:""}, "Pommer":{row:50,day:""},
+    "Riefler":{row:51,day:""}, "Denk Moni":{row:52,day:""}, "Wagner":{row:56,day:""},
+    "Strobl":{row:57,day:""}, "Leithner":{row:58,day:""}, "Zauner D":{row:62,day:""},
+    "Zauner G":{row:63,day:""}, "Peham":{row:64,day:""}, "Sonnleitner":{row:69,day:""}
+  }
+};
+const DAYS=["Mo","Di","Mi","Do","Fr"];
+const DAYNAME={Mo:"Montag",Di:"Dienstag",Mi:"Mittwoch",Do:"Donnerstag",Fr:"Freitag"};
+const MONTHS=["Jänner","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+
+/* ---------- Helfer ---------- */
+const $=s=>document.querySelector(s);
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}}
+function isoWeek(d){const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+  const dn=(t.getUTCDay()+6)%7;t.setUTCDate(t.getUTCDate()-dn+3);
+  const f=new Date(Date.UTC(t.getUTCFullYear(),0,4));
+  return 1+Math.round(((t-f)/86400000-3+((f.getUTCDay()+6)%7))/7);}
+function fmt(n){return n.toLocaleString("de-DE");}
+function todayDayCode(){const j=new Date().getDay();return [null,"Mo","Di","Mi","Do","Fr",null][j]||"Mo";}
+
+/* ---------- Zustand ---------- */
+let state={farm:null, day:null, editing:false};
+
+/* ---------- Wochen-Speicher (pro Betrieb + KW) ---------- */
+function weekKey(){return "wh_week_"+state.farm+"_"+isoWeek(new Date());}
+function loadWeek(){try{return JSON.parse(ls(weekKey())||"{}")||{};}catch(e){return {};}}
+function renderWeek(){
+  const wk=loadWeek(), sec=$("#weekSec"), list=$("#weekList");
+  const days=DAYS.filter(d=>wk[d]);
+  if(!days.length){ sec.style.display="none"; return; }
+  sec.style.display="block"; list.innerHTML="";
+  days.forEach(d=>{
+    const e=wk[d], parts=[];
+    if(e.p!=null)parts.push("P "+fmt(e.p)); if(e.w!=null)parts.push("W "+fmt(e.w));
+    const row=document.createElement("div"); row.className="wkrow";
+    row.innerHTML=`<div class="d">${d}</div><div class="vv">${parts.join(" · ")||"<small>—</small>"}</div>`
+      +(e.changed?`<span class="bdg">geändert</span>`:``)
+      +`<button class="ed">Ändern</button>`;
+    row.querySelector(".ed").onclick=()=>editDay(d);
+    list.appendChild(row);
+  });
+}
+function editDay(d){ selectDay(d); $("#pv").scrollIntoView({behavior:"smooth",block:"center"}); }
+
+/* ---------- Betrieb bestimmen ---------- */
+function resolveFarm(){
+  const p=new URLSearchParams(location.search);
+  let q=(p.get("betrieb")||p.get("b")||"").trim();
+  if(!q){ q=ls("wh_farm")||""; }
+  if(!q) return null;
+  const keys=Object.keys(CONFIG.farms);
+  let hit=keys.find(k=>k.toLowerCase()===q.toLowerCase());
+  if(!hit) hit=keys.find(k=>k.toLowerCase().startsWith(q.toLowerCase()));
+  return hit||null;
+}
+function setFarm(name){
+  state.farm=name; ls("wh_farm",name);
+  $("#greet").textContent="Servus, "+name+" 👋";
+  const std=CONFIG.farms[name].day||todayDayCode();
+  selectDay(std);            // prefüllt Werte für den Tag (siehe selectDay)
+  renderWeek();
+  $("#pick").classList.remove("show");
+}
+
+/* ---------- Tage rendern ---------- */
+function renderDays(){
+  const wrap=$("#days"); wrap.innerHTML="";
+  const now=new Date(); const monday=new Date(now); monday.setDate(now.getDate()-((now.getDay()+6)%7));
+  DAYS.forEach((d,i)=>{
+    const dt=new Date(monday); dt.setDate(monday.getDate()+i);
+    const el=document.createElement("div"); el.className="day"; el.dataset.day=d;
+    el.innerHTML=`<span class="dd">${d}</span><span class="dn">${dt.getDate()}.${dt.getMonth()+1}.</span>`;
+    el.onclick=()=>selectDay(d);
+    wrap.appendChild(el);
+  });
+}
+function selectDay(d){ state.day=d;
+  document.querySelectorAll(".day").forEach(e=>e.classList.toggle("on",e.dataset.day===d));
+  const wk=loadWeek(), cur=wk[d];
+  if(cur){ $("#pv").value=(cur.p==null?"":cur.p); $("#wv").value=(cur.w==null?"":cur.w); }
+  else { let last=null; try{last=JSON.parse(ls("wh_last_"+state.farm)||"null");}catch(e){}
+    $("#pv").value=(last&&last.p!=null?last.p:""); $("#wv").value=(last&&last.w!=null?last.w:""); }
+  hideWarn();}
+
+/* ---------- KW / Kopf ---------- */
+function renderHead(){
+  const now=new Date();
+  $("#kw").textContent="Kalenderwoche "+isoWeek(now)+" · "+now.getDate()+". "+MONTHS[now.getMonth()];
+}
+
+/* ---------- Stepper ---------- */
+document.querySelectorAll(".stepper button").forEach(b=>{
+  b.onclick=()=>{
+    const inp=b.dataset.t==="p"?$("#pv"):$("#wv");
+    const step=b.dataset.t==="p"?CONFIG.stepP:CONFIG.stepW;
+    let v=parseInt(inp.value||"0",10); if(isNaN(v))v=0;
+    v=Math.max(0, v+step*parseInt(b.dataset.d,10));
+    inp.value=v; hideWarn();
+  };
+});
+$("#pv").addEventListener("input",hideWarn); $("#wv").addEventListener("input",hideWarn);
+function hideWarn(){$("#warn").classList.remove("show");}
+
+/* ---------- Senden ---------- */
+$("#send").onclick=async ()=>{
+  const pRaw=$("#pv").value.trim(), wRaw=$("#wv").value.trim();
+  const p=pRaw===""?null:Math.max(0,parseInt(pRaw,10));
+  const w=wRaw===""?null:Math.max(0,parseInt(wRaw,10));
+  if(!state.day || (p===null && w===null)){ $("#warn").classList.add("show"); return; }
+
+  const wk=loadWeek(); const prev=wk[state.day]||null;
+  const corr = !!prev && ((prev.p??null)!==p || (prev.w??null)!==w);
+  const f=CONFIG.farms[state.farm]; const sheet="AL "+state.day;
+  const calls=[];
+  if(p!==null) calls.push({cell:CONFIG.colPremium+f.row, value:p});
+  if(w!==null) calls.push({cell:CONFIG.colWiesen+f.row, value:w});
+
+  $("#send").disabled=true; $("#send").textContent="Sende…";
+  try{
+    if(!CONFIG.demo){
+      for(const c of calls){
+        const url=`${CONFIG.webhook}?spreadsheet_id=${encodeURIComponent(CONFIG.spreadsheetId)}&sheet=${encodeURIComponent(sheet)}&cell=${c.cell}&value=${c.value}&betrieb=${encodeURIComponent(state.farm)}&korrektur=${corr?1:0}`;
+        await fetch(url,{mode:"no-cors"});
+      }
+    }else{
+      calls.forEach(c=>console.log("[DEMO] würde senden:",
+        `${CONFIG.webhook}?spreadsheet_id=${CONFIG.spreadsheetId}&sheet=${encodeURIComponent(sheet)}&cell=${c.cell}&value=${c.value}`));
+      await new Promise(r=>setTimeout(r,450));
+    }
+    wk[state.day]={p,w,ts:Date.now(),changed:corr||(prev&&prev.changed)||false,prevP:prev?(prev.p??null):null,prevW:prev?(prev.w??null):null};
+    ls(weekKey(), JSON.stringify(wk));
+    ls("wh_last_"+state.farm, JSON.stringify({p,w,day:state.day}));
+    renderWeek();
+    showDone(p,w,{corr,prev});
+  }catch(e){
+    $("#warn").textContent="Senden hat nicht geklappt – nochmal versuchen."; $("#warn").classList.add("show");
+  }finally{
+    $("#send").disabled=false; $("#send").textContent="Meldung senden";
+  }
+};
+
+/* ---------- Bestätigung ---------- */
+function showDone(p,w,info){
+  info=info||{}; const corr=info.corr, prev=info.prev||{};
+  const pCell=(corr&&prev.p!=null&&prev.p!==p)?`<s>${fmt(prev.p)}</s>→ ${fmt(p)}`:fmt(p);
+  const wCell=(corr&&prev.w!=null&&prev.w!==w)?`<s>${fmt(prev.w)}</s>→ ${fmt(w)}`:fmt(w);
+  const rows=[`<div class="r"><span class="k">Kalenderwoche</span><b>${isoWeek(new Date())}</b></div>`,
+    `<div class="r"><span class="k">Liefertag</span><b>${DAYNAME[state.day]}</b></div>`];
+  if(p!==null) rows.push(`<div class="r"><span class="k">Premium 🥚</span><b>${pCell}</b></div>`);
+  if(w!==null) rows.push(`<div class="r"><span class="k">Wiesen 🌿</span><b>${wCell}</b></div>`);
+  $("#doneSum").innerHTML=rows.join("");
+  $("#doneTitle").textContent = corr ? "Korrektur gespeichert ✎" : ("Danke, "+state.farm+"!");
+  $("#doneMsg").innerHTML = corr
+    ? (CONFIG.demo?"Vorschau — im Echtbetrieb wird die Korrektur übernommen und die Kommissionierung über die Änderung informiert."
+                  :"Korrektur übernommen. Die Kommissionierung wird über die Änderung informiert.")
+    : (CONFIG.demo?"Vorschau — im Echtbetrieb landet das jetzt automatisch in der Kommissionierung."
+                  :"Deine Meldung ist bei der Kommissionierung angekommen. Du kannst sie jederzeit korrigieren.");
+  $("#done").classList.add("show");
+}
+$("#newOne").onclick=()=>{ $("#done").classList.remove("show"); };
+$("#editAgain").onclick=()=>{ $("#done").classList.remove("show"); /* Werte bleiben stehen -> Korrektur */ };
+
+/* ---------- Betrieb-Auswahl ---------- */
+function buildPicker(){
+  const g=$("#pickGrid"); g.innerHTML="";
+  Object.keys(CONFIG.farms).sort((a,b)=>a.localeCompare(b,"de")).forEach(n=>{
+    const b=document.createElement("button"); b.textContent=n; b.onclick=()=>setFarm(n); g.appendChild(b);
+  });
+}
+$("#changeFarm").onclick=e=>{e.preventDefault(); $("#pick").classList.add("show");};
+
+/* ---------- Start ---------- */
+(function init(){
+  if(CONFIG.demo) $("#demoTag").classList.add("show");
+  renderHead(); renderDays(); buildPicker();
+  const f=resolveFarm();
+  if(f){ setFarm(f); } else { selectDay(todayDayCode()); $("#pick").classList.add("show"); }
+})();
+</script>
+</body>
+</html>
