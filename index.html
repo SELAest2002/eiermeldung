@@ -171,7 +171,7 @@ footer{color:var(--muted);font-size:11px;text-align:center;padding:18px;line-hei
     <div class="mhd"><div class="top"><div class="em">📅</div><div class="nm">MHD dieser Lieferung</div></div>
       <input type="date" id="mhd">
       <div class="hint">Vorschlag: <b>Legedatum + 28 Tage</b> <span class="tag">Vorlage folgt</span><br>Wird pro Betrieb individuell hinterlegt — nur bei finaler Liefermenge nötig.</div></div></div>
-  <footer>Wanderhuhn Eiermeldung · Entwurf v2<br>Packstellen &amp; Zeilen aus „Kommissionierung_KW 25_2026" · Ställe aus dem Management-Dashboard (Stand 27.05.2026)</footer>
+  <footer>Wanderhuhn Eiermeldung · Testbetrieb<br>Packstellen &amp; Zeilen aus „Kommissionierung_KW 25_2026" · Ställe aus dem Management-Dashboard (Stand 27.05.2026)</footer>
 </div>
 <div class="bar"><div class="inner"><button class="send" id="send">Prognose senden</button></div></div>
 <div class="done" id="done"><div class="check"><svg viewBox="0 0 100 100"><path d="M26 52l16 16 32-34"/></svg></div>
@@ -341,6 +341,9 @@ function renderVpCalc(){ if(!document.querySelector("#vpRows")) return;
   }
   const boxes=c.p.sechser+c.p.zehner+c.w.sechser+c.w.zehner;
   const packed=eierVon(c.p)+eierVon(c.w), rest=ges-packed;
+  /* Verpackung erst zeigen, wenn eine Menge da ist - vorher hat der Vorschlag keinen Inhalt.
+     (War im Entwurf dauerhaft ausgeblendet: der Landwirt konnte den Vorschlag nicht anpassen.) */
+  const vs=document.querySelector("#vpSec"); if(vs) vs.style.display = ges>0 ? "block" : "none";
   document.querySelector("#vpCalc").innerHTML = ges
     ? '<b>'+boxes+'</b> IFCO-Boxen gesamt &nbsp;·&nbsp; verpackt <b>'+fmt(packed)+'</b> von '+fmt(ges)+' Eiern &nbsp;·&nbsp; '+
       (rest<0 ? '<b class="neg">'+fmt(-rest)+' Eier zu viel verpackt ⚠️</b>' : 'lose <b>'+fmt(rest)+'</b>')
