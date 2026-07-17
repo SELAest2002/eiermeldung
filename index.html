@@ -247,11 +247,12 @@ function setMode(m){ state.mode=m; document.body.classList.toggle("final",m==="f
                                          :"Prognose = Schätzung, jederzeit änderbar. Wird orange geführt.";
   renderWeek(); }
 $("#btnP").onclick=()=>setMode("prognose"); $("#btnF").onclick=()=>setMode("final");
+/* Die Kacheln zeigen das ECHTE Abholdatum, nicht den Tag der laufenden Woche.
+   Sonst steht am Freitag "Mo 13.7." (Vergangenheit), waehrend gemeint ist: Mo 20.7. */
 function renderDays(){ const wrap=$("#days"); wrap.innerHTML="";
-  const now=new Date(); const monday=new Date(now); monday.setDate(now.getDate()-((now.getDay()+6)%7));
-  DAYS.forEach((d,i)=>{ const dt=new Date(monday); dt.setDate(monday.getDate()+i);
+  DAYS.forEach(d=>{ const ab=abholung(d);
     const el=document.createElement("div"); el.className="day"; el.dataset.day=d;
-    el.innerHTML='<span>'+d+'</span><span class="dn">'+dt.getDate()+'.'+(dt.getMonth()+1)+'.</span>';
+    el.innerHTML='<span>'+d+'</span><span class="dn">'+ab.date.getDate()+'.'+(ab.date.getMonth()+1)+'.</span>';
     el.onclick=()=>selectDay(d); wrap.appendChild(el); }); }
 function selectDay(d){ state.day=d;
   document.querySelectorAll(".day").forEach(e=>e.classList.toggle("on",e.dataset.day===d));
@@ -429,7 +430,7 @@ $("#changeFarm").onclick=e=>{e.preventDefault();$("#pick").classList.add("show")
   const keys=Object.keys(CONFIG.farms);
   const hit=keys.find(k=>k.toLowerCase()===q.toLowerCase())||keys.find(k=>q&&k.toLowerCase().startsWith(q.toLowerCase()));
   const now=new Date();
-  $("#kw").textContent="Kalenderwoche "+isoWeek(now)+" · "+now.getDate()+". "+MONTHS[now.getMonth()];
+  $("#kw").textContent="Heute "+now.getDate()+". "+MONTHS[now.getMonth()]+" · Meldung für die nächste Abholung";
   $("#mhd").value=new Date(now.getTime()+CONFIG.mhdTageStandard*86400000).toISOString().slice(0,10);
   buildPS(); renderDays(); buildPicker(); setMode("prognose");
   if(hit){setFarm(hit);} else {$("#pick").classList.add("show");} })();
