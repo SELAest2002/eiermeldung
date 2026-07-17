@@ -216,6 +216,32 @@ const farmOf=()=>CONFIG.farms[state.farm]||{staelle:[]};
    Eine am DONNERSTAG gesendete "AL Mo"-Meldung meint den Montag der FOLGEWOCHE
    und gehoert damit in die naechste Wochendatei. Aus einer Chat-Woche werden zwei
    Zieldateien. Frueher musste das jemand im Kopf mitfuehren - jetzt rechnet es die App. */
+/* Meldung an den Sheet-Writer — per JSONP, damit wir die ANTWORT LESEN können.
+   Vorher lief das über fetch(mode:"no-cors"): die Antwort ist dabei undurchsichtig,
+   Erfolg und Fehlschlag sind ununterscheidbar. Die App hat "übertragen" gemeldet,
+   auch wenn nichts angekommen war. Ein Landwirt darf nie ein grünes Häkchen sehen,
+   wenn die Zahl nicht im Sheet steht. */
+function sende(basis, params, timeoutMs){
+  return new Promise(res=>{
+    const cb = "whCb" + Date.now() + Math.floor(Math.random()*1000);
+    const s  = document.createElement("script");
+    let fertig = false;
+    const auf = () => { try{ delete window[cb]; }catch(e){ window[cb]=undefined; }
+                        if(s.parentNode) s.parentNode.removeChild(s); };
+    const to = setTimeout(()=>{ if(fertig) return; fertig=true; auf();
+      res({ok:false, error:"Keine Antwort — Internet prüfen und nochmal senden."}); },
+      timeoutMs || 15000);
+    window[cb] = (antwort)=>{ if(fertig) return; fertig=true; clearTimeout(to); auf();
+      res(antwort && typeof antwort==="object" ? antwort
+                                              : {ok:false, error:"Unerwartete Antwort vom Server."}); };
+    s.onerror = ()=>{ if(fertig) return; fertig=true; clearTimeout(to); auf();
+      res({ok:false, error:"Server nicht erreichbar."}); };
+    params.set("callback", cb);
+    s.src = basis + "?" + params.toString();
+    document.head.appendChild(s);
+  });
+}
+
 const DAYNUM={Mo:1,Di:2,Mi:3,Do:4,Fr:5};
 function abholung(tag){
   const heute=new Date(); heute.setHours(0,0,0,0);
@@ -378,11 +404,18 @@ $("#send").onclick=async ()=>{ if(!state.farm){$("#pick").classList.add("show");
     if(cv.p.sechser) vp.push("P6er x"+cv.p.sechser); if(cv.p.zehner) vp.push("P10er x"+cv.p.zehner);
     if(cv.w.sechser) vp.push("W6er x"+cv.w.sechser); if(cv.w.zehner) vp.push("W10er x"+cv.w.zehner);
     if(vp.length) q.set("verpackung",vp.join(" | ")+(cv.manual?" (vom Landwirt angepasst)":""));
-    const url=CONFIG.webhook+"?"+q.toString();
     $("#send").disabled=true; $("#send").textContent="Sende\u2026";
-    try{ await fetch(url,{mode:"no-cors"}); zentral=true; }
-    catch(err){ await new Promise(res=>{ const im=new Image(); im.onload=im.onerror=res; im.src=url; setTimeout(res,4000); }); zentral=true; }
+    const antwort = await sende(CONFIG.webhook, q);
     $("#send").disabled=false; setMode(state.mode);
+    if(!antwort.ok){
+      // NICHT als Erfolg ausgeben. Lokal ist gespeichert, zentral nicht.
+      window._fehler = antwort.error || "Unbekannter Fehler";
+      alert("Nicht \u00fcbertragen!\n\n" + window._fehler +
+            "\n\nDeine Eingabe ist am Handy gespeichert. Bitte nochmal auf Senden tippen." +
+            "\nWenn es wieder nicht geht: im B\u00fcro anrufen.");
+      return;
+    }
+    window._zeile = antwort.zeile; zentral=true;
   }
   window._zentral=zentral;
   const g=state.mode==="final", std=farmOf().packstelle, ps=$("#ps").value;
@@ -405,7 +438,9 @@ $("#send").onclick=async ()=>{ if(!state.farm){$("#pick").classList.add("show");
   $("#doneSum").innerHTML=rows.join(""); $("#doneTitle").textContent="Danke, "+state.farm+"!";
   $("#doneBadge").textContent=g?"Finale Liefermenge":"Prognose";
   $("#doneMsg").innerHTML = window._zentral
-    ? "In die Kommissionierung KW " + _ab.kw + " übertragen — " + (g ? "grün (finale Menge)." : "orange (Prognose).")
+    ? "✓ Vom Büro bestätigt: steht in der Kommissionierung KW " + _ab.kw +
+      (window._zeile ? " (Zeile " + window._zeile + ")" : "") + " — " +
+      (g ? "grün (finale Menge)." : "orange (Prognose).")
     : "<b>Lokal gespeichert.</b> Zentrale Übertragung ist aus (demo:true).";
   $("#done").classList.add("show"); };
 $("#newOne").onclick=()=>$("#done").classList.remove("show");
