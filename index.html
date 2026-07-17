@@ -1,416 +1,436 @@
 <!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#e3973d">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<html lang="de"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#e3973d"><meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Eiermeldung">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23e3973d'/%3E%3Cellipse cx='50' cy='54' rx='24' ry='30' fill='%23fff'/%3E%3C/svg%3E">
 <title>Wanderhuhn · Eiermeldung</title>
 <style>
-:root{
-  --bg:#f4efe6; --card:#fff; --ink:#211c17; --ink2:#6c6255; --muted:#988d7c;
-  --line:#e7dfd1; --brand:#e3973d; --branddk:#c2762a; --brand2:#f7b25c;
-  --good:#2f9e63; --goodbg:#e6f4ec; --shadow:0 10px 30px rgba(70,50,20,.10);
-}
+:root{--bg:#f4efe6;--card:#fff;--ink:#211c17;--ink2:#6c6255;--muted:#988d7c;--line:#e7dfd1;
+--orange:#e3973d;--orangedk:#c2762a;--orangebg:#fbeede;--green:#2f9e63;--greendk:#24784b;--greenbg:#e6f4ec;
+--shadow:0 10px 30px rgba(70,50,20,.10);--acc:var(--orange);--accdk:var(--orangedk);--accbg:var(--orangebg);}
+body.final{--acc:var(--green);--accdk:var(--greendk);--accbg:var(--greenbg);}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
-body{background:var(--bg);color:var(--ink);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
-  -webkit-font-smoothing:antialiased;display:flex;justify-content:center}
-.app{width:100%;max-width:460px;min-height:100%;display:flex;flex-direction:column;
-  background:var(--bg);position:relative;padding-bottom:104px}
-@media(min-width:480px){.app{box-shadow:var(--shadow);margin:0 auto}}
-
-/* header */
-header{padding:22px 22px 8px;display:flex;align-items:center;gap:13px}
-.logo{width:44px;height:44px;border-radius:13px;flex:0 0 auto;display:grid;place-items:center;
-  background:linear-gradient(150deg,var(--brand2),var(--branddk));box-shadow:0 6px 16px rgba(227,151,61,.32)}
-.logo svg{width:26px;height:26px}
-.htxt .t{font-weight:800;font-size:18px;letter-spacing:-.3px}
-.htxt .s{color:var(--muted);font-size:12.5px;margin-top:1px}
-
-/* greeting card */
-.hello{margin:14px 18px 6px;background:linear-gradient(160deg,#fff,#fbf5ea);
-  border:1px solid var(--line);border-radius:20px;padding:18px 20px;box-shadow:var(--shadow)}
-.hello .hi{font-size:22px;font-weight:800;letter-spacing:-.4px}
-.hello .kw{display:inline-flex;align-items:center;gap:7px;margin-top:8px;background:#fbeede;
-  color:var(--branddk);font-weight:700;font-size:13.5px;padding:6px 12px;border-radius:999px}
-.hello .chg{float:right;color:var(--brand);font-size:12.5px;font-weight:700;text-decoration:none;margin-top:4px}
-
-/* sections */
-.sec{margin:18px 18px 0}
-.sec>.lbl{font-size:13px;font-weight:750;letter-spacing:.3px;text-transform:uppercase;color:var(--muted);margin:0 4px 10px}
-
-/* day chips */
-.days{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
-.day{height:60px;border-radius:16px;border:1.5px solid var(--line);background:var(--card);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;
-  transition:transform .12s,border-color .15s,background .15s;font-weight:700}
-.day .dd{font-size:16px}
-.day .dn{font-size:10.5px;color:var(--muted);font-weight:600}
-.day:active{transform:scale(.95)}
-.day.on{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:0 8px 18px rgba(227,151,61,.34)}
-.day.on .dn{color:#fff8ee}
-
-/* amount cards */
-.amt{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 16px 18px;
-  box-shadow:var(--shadow);margin-bottom:14px}
-.amt .top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.amt .em{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:20px}
-.amt.p .em{background:#fbeede}.amt.w .em{background:#e9f2e4}
-.amt .nm{font-weight:750;font-size:17px}
-.amt .hint{color:var(--muted);font-size:12px;margin-top:1px;font-weight:500}
-.stepper{display:grid;grid-template-columns:60px 1fr 60px;gap:12px;align-items:center}
-.stepper button{height:60px;border-radius:15px;border:1.5px solid var(--line);background:#faf6ef;
-  font-size:30px;font-weight:600;color:var(--branddk);cursor:pointer;line-height:1;transition:transform .1s,background .15s}
-.stepper button:active{transform:scale(.92);background:#f2e7d6}
-.stepper input{width:100%;height:64px;border:none;background:#f7f2e9;border-radius:15px;text-align:center;
-  font-size:32px;font-weight:800;color:var(--ink);letter-spacing:-.5px;font-variant-numeric:tabular-nums}
-.stepper input::placeholder{color:#cbbfab;font-weight:700}
-.stepper input:focus{outline:2px solid var(--brand);background:#fff}
-
-/* Wochenübersicht */
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;display:flex;justify-content:center}
+.app{width:100%;max-width:460px;min-height:100%;padding-bottom:112px}
+.draft{position:sticky;top:0;z-index:40;background:#2b2620;color:#f7b25c;font-size:11.5px;font-weight:700;text-align:center;padding:6px}
+header{padding:18px 22px 6px;display:flex;align-items:center;gap:13px}
+.logo{width:44px;height:44px;border-radius:13px;flex:0 0 auto;background:radial-gradient(circle at 32% 30%,#fff 0 16%,transparent 17%),linear-gradient(150deg,#f7b25c,var(--orangedk));box-shadow:0 6px 16px rgba(227,151,61,.32)}
+.htxt .t{font-weight:800;font-size:18px;letter-spacing:-.3px}.htxt .s{color:var(--muted);font-size:12.5px}
+.hello{margin:12px 18px 4px;background:linear-gradient(160deg,#fff,#fbf7f0);border:1px solid var(--line);border-radius:20px;padding:16px 20px;box-shadow:var(--shadow)}
+.hello .chg{float:right;color:var(--acc);font-size:12.5px;font-weight:800;text-decoration:none;margin-top:3px}
+.hello .hi{font-size:21px;font-weight:800;letter-spacing:-.4px}
+.hello .kw{display:inline-flex;margin-top:8px;background:var(--accbg);color:var(--accdk);font-weight:700;font-size:13px;padding:6px 12px;border-radius:999px}
+.sec{margin:16px 18px 0}
+.sec>.lbl{font-size:12.5px;font-weight:750;letter-spacing:.3px;text-transform:uppercase;color:var(--muted);margin:0 4px 9px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.sec>.lbl .sub{text-transform:none;letter-spacing:0;font-weight:600;font-size:11.5px}
+.pscard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;box-shadow:var(--shadow)}
+.psrow{display:flex;align-items:center;gap:10px}
+.psic{width:34px;height:34px;border-radius:10px;background:var(--accbg);display:grid;place-items:center;font-size:17px;flex:0 0 auto}
+.pscard select{flex:1;min-width:0;height:50px;border:1.5px solid var(--line);border-radius:12px;background:#faf7f1;font-size:16px;font-weight:750;font-family:inherit;color:var(--ink);padding:0 10px}
+.pscard select:focus{outline:2px solid var(--acc);background:#fff}
+.pshint{color:var(--muted);font-size:11.5px;margin-top:8px;line-height:1.4}
+.pshint b{color:var(--ink2)} .warnps{color:var(--orangedk);font-weight:800}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#ece3d6;border-radius:16px;padding:6px}
+.seg button{height:56px;border:none;border-radius:12px;background:transparent;font-size:15px;font-weight:800;color:var(--ink2);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.seg button small{font-weight:600;font-size:11px;opacity:.75}
+.seg button.on{background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.10)}
+.seg button.on.pg{color:var(--orangedk)} .seg button.on.fi{color:var(--greendk)}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:6px}
+.dot.o{background:var(--orange)} .dot.g{background:var(--green)}
+.segHint{color:var(--muted);font-size:12px;margin:8px 4px 0;line-height:1.4}
 .wk{display:flex;flex-direction:column;gap:8px}
-.wkrow{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px 13px}
-.wkrow .d{width:34px;height:34px;border-radius:10px;background:#fbeede;color:var(--branddk);display:grid;place-items:center;font-weight:800;font-size:13px;flex:0 0 auto}
-.wkrow .vv{flex:1;font-size:14.5px;font-weight:650;color:var(--ink)}
-.wkrow .vv small{color:var(--muted)}
-.wkrow .bdg{font-size:10px;font-weight:800;color:#b06a1f;background:#f6e2c6;border-radius:999px;padding:3px 8px;text-transform:uppercase;letter-spacing:.4px}
-.wkrow .ed{color:var(--brand);font-weight:800;font-size:13.5px;cursor:pointer;background:none;border:none;padding:6px 4px}
-.done .sum s{color:var(--muted);font-weight:600;margin-right:3px}
-
-/* submit bar */
-.bar{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;
-  padding:14px 18px calc(16px + env(safe-area-inset-bottom));
-  background:linear-gradient(180deg,rgba(244,239,230,0),var(--bg) 34%)}
+.wkrow{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.wkrow .d{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-weight:800;font-size:12.5px;flex:0 0 auto}
+.wkrow .d.o{background:var(--orangebg);color:var(--orangedk)} .wkrow .d.g{background:var(--greenbg);color:var(--greendk)}
+.wkrow .vv{flex:1;font-size:14px;font-weight:650}
+.st{font-size:10px;font-weight:800;border-radius:999px;padding:3px 8px;text-transform:uppercase;letter-spacing:.4px}
+.st.o{background:var(--orangebg);color:var(--orangedk)} .st.g{background:var(--greenbg);color:var(--greendk)}
+.wkrow .ed{color:var(--acc);font-weight:800;font-size:13px;cursor:pointer;background:none;border:none;padding:6px 2px}
+.days{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.day{height:58px;border-radius:15px;border:1.5px solid var(--line);background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font-weight:700}
+.day .dn{font-size:10px;color:var(--muted);font-weight:600}
+.day.on{background:var(--acc);border-color:var(--acc);color:#fff}.day.on .dn{color:rgba(255,255,255,.85)}
+.stall{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 14px 16px;box-shadow:var(--shadow);margin-bottom:12px}
+.stallHead{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.stallHead .ic{width:32px;height:32px;border-radius:9px;background:var(--accbg);color:var(--accdk);display:grid;place-items:center;font-size:13px;font-weight:800}
+.stallHead .nm{font-weight:750;font-size:15.5px}
+.stallHead .cap{margin-left:auto;color:var(--muted);font-size:11.5px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fld .fl{font-size:11.5px;font-weight:700;color:var(--ink2);margin:0 0 5px 2px}
+.fld input{width:100%;height:52px;border:1.5px solid var(--line);background:#faf7f1;border-radius:13px;text-align:center;font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.fld input:focus{outline:2px solid var(--acc);background:#fff}
+.fld input::placeholder{color:#cbbfab}
+.amt{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 14px 16px;box-shadow:var(--shadow);margin-bottom:12px}
+.amt .top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.amt .em{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:19px}
+.amt.p .em{background:var(--orangebg)} .amt.w .em{background:#e9f2e4}
+.amt .nm{font-weight:750;font-size:16px}.amt .hint{color:var(--muted);font-size:11.5px}
+.stepper{display:grid;grid-template-columns:56px 1fr 56px;gap:10px;align-items:center}
+.stepper button{height:56px;border-radius:14px;border:1.5px solid var(--line);background:#faf6ef;font-size:27px;color:var(--accdk);cursor:pointer;line-height:1}
+.stepper input{width:100%;height:58px;border:none;background:#f7f2e9;border-radius:14px;text-align:center;font-size:29px;font-weight:800;font-variant-numeric:tabular-nums}
+.stepper input:focus{outline:2px solid var(--acc);background:#fff}
+.sum{background:var(--accbg);border:1.5px solid var(--acc);border-radius:16px;padding:13px 16px;display:flex;align-items:center;gap:12px}
+.sum .lb{font-size:12px;font-weight:800;color:var(--accdk);text-transform:uppercase;letter-spacing:.4px}
+.sum .note{font-size:11px;color:var(--accdk);opacity:.85;margin-top:3px;font-weight:600}
+.sum .vals{margin-left:auto;font-size:16px;font-weight:800}
+.mhd{background:var(--card);border:1.5px solid var(--green);border-radius:18px;padding:14px 16px 16px;box-shadow:var(--shadow)}
+.mhd .top{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.mhd .em{width:32px;height:32px;border-radius:9px;background:var(--greenbg);display:grid;place-items:center;font-size:16px}
+.mhd .nm{font-weight:750;font-size:15.5px}
+.mhd input[type=date]{width:100%;height:52px;border:1.5px solid var(--line);background:#faf7f1;border-radius:13px;padding:0 14px;font-size:17px;font-weight:700;font-family:inherit}
+.mhd .hint{color:var(--muted);font-size:11.5px;margin-top:8px;line-height:1.45}
+.tag{display:inline-block;background:#fff4e2;color:#8a5a1c;border:1px solid #eddcc0;border-radius:999px;padding:2px 8px;font-size:10.5px;font-weight:800;margin-left:6px}
+.bar{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;padding:14px 18px calc(16px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(244,239,230,0),var(--bg) 34%)}
 .bar .inner{width:100%;max-width:424px}
-.send{width:100%;height:62px;border:none;border-radius:18px;background:var(--brand);color:#fff;
-  font-size:19px;font-weight:800;letter-spacing:.2px;cursor:pointer;box-shadow:0 10px 24px rgba(227,151,61,.4);
-  display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .12s,background .15s}
-.send:active{transform:scale(.98);background:var(--branddk)}
-.send:disabled{background:#d8cdba;box-shadow:none;color:#fbf7ef}
-.warn{color:#c25a3a;font-size:13px;font-weight:600;text-align:center;margin-bottom:10px;min-height:0;
-  opacity:0;transition:opacity .2s}
-.warn.show{opacity:1}
-
-/* confirmation */
-.done{position:fixed;inset:0;background:linear-gradient(180deg,#fff,#f4efe6);z-index:50;
-  display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px}
-.done.show{display:flex;animation:fade .35s ease}
-@keyframes fade{from{opacity:0}to{opacity:1}}
-.check{width:104px;height:104px;border-radius:50%;background:var(--goodbg);display:grid;place-items:center;margin-bottom:22px;
-  animation:pop .5s cubic-bezier(.2,.8,.2,1.2) both}
+.send{width:100%;height:60px;border:none;border-radius:18px;background:var(--acc);color:#fff;font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.done{position:fixed;inset:0;background:linear-gradient(180deg,#fff,var(--bg));z-index:50;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px}
+.done.show{display:flex;animation:fade .3s ease}@keyframes fade{from{opacity:0}to{opacity:1}}
+.check{width:92px;height:92px;border-radius:50%;background:var(--accbg);display:grid;place-items:center;margin-bottom:16px;animation:pop .45s cubic-bezier(.2,.8,.2,1.2) both}
 @keyframes pop{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
-.check svg{width:56px;height:56px}
-.check svg path{stroke:var(--good);stroke-width:8;fill:none;stroke-linecap:round;stroke-linejoin:round;
-  stroke-dasharray:90;stroke-dashoffset:90;animation:draw .5s .2s ease forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
-.done h2{font-size:26px;font-weight:820;letter-spacing:-.5px}
-.done .sum{margin:16px 0 4px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 22px;
-  box-shadow:var(--shadow);min-width:250px}
-.done .sum .r{display:flex;justify-content:space-between;gap:26px;padding:7px 0;font-size:16px}
-.done .sum .r+.r{border-top:1px solid var(--line)}
-.done .sum .r b{font-weight:800}
-.done .sum .r .k{color:var(--ink2)}
-.done .msg{color:var(--ink2);font-size:14px;margin:14px 0 26px;max-width:30ch;line-height:1.5}
-.done .acts{display:flex;gap:12px}
-.btn2{height:52px;padding:0 22px;border-radius:14px;font-size:15.5px;font-weight:750;cursor:pointer;border:1.5px solid var(--line);background:#fff;color:var(--ink)}
-.btn2.pri{background:var(--brand);border-color:var(--brand);color:#fff}
-.demoTag{position:fixed;top:0;left:0;right:0;background:#2b2620;color:#f7b25c;font-size:11.5px;font-weight:700;
-  text-align:center;padding:5px;letter-spacing:.4px;z-index:60;display:none}
-.demoTag.show{display:block}
-.demoTag+ .app,.demoTag.show ~ .app{}
-
-/* farm picker */
+.check svg{width:50px;height:50px}.check svg path{stroke:var(--accdk);stroke-width:8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.done h2{font-size:23px;font-weight:820}
+.done .badge{display:inline-block;margin-top:9px;background:var(--accbg);color:var(--accdk);border-radius:999px;padding:5px 14px;font-size:12.5px;font-weight:800;text-transform:uppercase}
+.done .card{margin:14px 0 6px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 18px;box-shadow:var(--shadow);min-width:275px}
+.done .r{display:flex;justify-content:space-between;gap:20px;padding:6px 0;font-size:14.5px}
+.done .r+.r{border-top:1px solid var(--line)}.done .r .k{color:var(--ink2)}
+.done .msg{color:var(--ink2);font-size:13px;margin:10px 0 20px;max-width:31ch;line-height:1.5}
+.btn2{height:50px;padding:0 22px;border-radius:14px;font-size:15px;font-weight:750;cursor:pointer;border:1.5px solid var(--line);background:#fff}
+.btn2.pri{background:var(--acc);border-color:var(--acc);color:#fff}.acts{display:flex;gap:10px}
 .pick{position:fixed;inset:0;background:rgba(30,24,18,.5);z-index:70;display:none;align-items:flex-end;justify-content:center}
 .pick.show{display:flex;animation:fade .25s ease}
-.pick .sheet{background:#fff;width:100%;max-width:460px;border-radius:24px 24px 0 0;padding:22px 20px calc(24px + env(safe-area-inset-bottom));max-height:82vh;overflow:auto}
-.pick h3{font-size:19px;font-weight:800;margin-bottom:4px}
-.pick p{color:var(--ink2);font-size:13.5px;margin-bottom:14px}
-.pick .grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.pick .grid button{height:50px;border-radius:13px;border:1.5px solid var(--line);background:#faf6ef;font-weight:700;font-size:14.5px;cursor:pointer;color:var(--ink)}
-.pick .grid button:active{background:#f0e6d5}
-footer{color:var(--muted);font-size:11px;text-align:center;padding:20px}
-</style>
-</head>
-<body>
-<div class="demoTag" id="demoTag">DEMO – es wird noch nichts in die Tabelle geschrieben</div>
-
+.pick .sheet{background:#fff;width:100%;max-width:460px;border-radius:24px 24px 0 0;padding:20px 18px calc(22px + env(safe-area-inset-bottom));max-height:84vh;overflow:auto}
+.pick h3{font-size:19px;font-weight:800;margin-bottom:3px}.pick p{color:var(--ink2);font-size:13px;margin-bottom:12px}
+.pick .grp{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:12px 2px 6px}
+.pick .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pick .grid button{min-height:52px;border-radius:13px;border:1.5px solid var(--line);background:#faf6ef;font-weight:700;font-size:14px;cursor:pointer;color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px}
+.pick .grid button small{font-weight:600;font-size:10.5px;color:var(--muted)}
+.pick .grid button.on{border-color:var(--acc);background:var(--accbg)}
+.vpcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
+.vprow{display:grid;grid-template-columns:96px 1fr 1fr;gap:9px;align-items:center;margin-bottom:9px}
+.vprow:last-child{margin-bottom:0}
+.vprow .pl{font-weight:750;font-size:14px}
+.vpf{position:relative}
+.vpf label{position:absolute;top:-7px;left:9px;background:var(--card);padding:0 5px;font-size:9.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
+.vpf input{width:100%;height:46px;border:1.5px solid var(--line);background:#faf7f1;border-radius:11px;text-align:center;font-size:18px;font-weight:800;font-variant-numeric:tabular-nums}
+.vpf input:focus{outline:2px solid var(--acc);background:#fff}
+.vpf input::placeholder{color:#cbbfab}
+.vpedit{display:flex;flex-direction:column;gap:8px;margin-bottom:4px}
+.vpe{display:grid;grid-template-columns:1fr 42px 48px 42px;gap:8px;align-items:center}
+.vpe .nm{font-weight:700;font-size:13.5px}
+.vpe button{height:40px;border-radius:10px;border:1.5px solid var(--line);background:#faf6ef;font-size:19px;color:var(--accdk);cursor:pointer;line-height:1}
+.vpe button:active{background:#f0e6d5}
+.vpe .cnt{height:40px;border:1.5px solid var(--line);border-radius:10px;background:#f7f2e9;display:grid;place-items:center;font-weight:800;font-size:16px;font-variant-numeric:tabular-nums}
+.vphead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.vphead .tt{font-weight:800;font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
+.vplink{background:none;border:none;color:var(--acc);font-weight:800;font-size:12.5px;cursor:pointer;padding:4px 2px}
+.vprow2{display:flex;align-items:center;gap:10px;padding:11px 2px;border-bottom:1px solid var(--line)}
+.vprow2:last-child{border-bottom:none}
+.vprow2 .pl{font-weight:750;font-size:14.5px;display:flex;flex-direction:column}
+.vprow2 .pl small{font-weight:600;font-size:11px;color:var(--muted);margin-top:2px}
+.vprow2 .vpv{margin-left:auto;text-align:right;font-size:14px;font-weight:650;color:var(--ink2)}
+.vprow2 .vpv b{color:var(--ink);font-size:17px}
+.vprow2 .rst{display:block;font-size:11px;font-weight:800;color:#c25a3a;margin-top:2px}
+.vprow2 .ok{display:block;font-size:11px;font-weight:800;color:var(--greendk);margin-top:2px}
+.vpcalc{margin-top:10px;background:var(--accbg);border:1.5px solid var(--acc);border-radius:14px;padding:11px 14px;font-size:13px;font-weight:700;color:var(--accdk);line-height:1.5}
+.vpcalc b{color:var(--ink)} .vpcalc .neg{color:#c25a3a}
+.vpnote{color:var(--muted);font-size:11px;margin-top:7px;line-height:1.4}
+footer{color:var(--muted);font-size:11px;text-align:center;padding:18px;line-height:1.5}
+</style></head>
+<body class="prognose">
 <div class="app">
-  <header>
-    <div class="logo"><svg viewBox="0 0 100 100"><ellipse cx="50" cy="55" rx="30" ry="37" fill="#fff"/><ellipse cx="50" cy="55" rx="30" ry="37" fill="none" stroke="#fff" stroke-width="0"/><path d="M50 20c9 14 16 22 16 33a16 16 0 0 1-32 0c0-11 7-19 16-33z" fill="#fff" opacity=".0"/></svg></div>
-    <div class="htxt"><div class="t">Eiermeldung</div><div class="s">Wanderhuhn · Kommissionierung</div></div>
-  </header>
-
-  <div class="hello">
-    <a class="chg" id="changeFarm" href="#">Betrieb wechseln</a>
-    <div class="hi" id="greet">Servus 👋</div>
-    <div class="kw" id="kw">Kalenderwoche –</div>
-  </div>
-
-  <div class="sec" id="weekSec" style="display:none">
-    <div class="lbl">Diese Woche gemeldet</div>
-    <div class="wk" id="weekList"></div>
-  </div>
+  <div class="draft">ENTWURF v2 · Optik &amp; Bedienung · schreibt nichts</div>
+  <header><div class="logo"></div><div class="htxt"><div class="t">Eiermeldung</div><div class="s">Wanderhuhn · Kommissionierung</div></div></header>
+  <div class="hello"><a class="chg" id="changeFarm" href="#">Betrieb wechseln</a>
+    <div class="hi" id="greet">Servus 👋</div><div class="kw" id="kw">Kalenderwoche –</div></div>
 
   <div class="sec">
-    <div class="lbl">Für welchen Liefertag?</div>
-    <div class="days" id="days"></div>
-  </div>
-
-  <div class="sec">
-    <div class="lbl">Wie viele Eier?</div>
-    <div class="amt p">
-      <div class="top"><div class="em">🥚</div><div><div class="nm">Premium-Eier</div><div class="hint">leer lassen = nicht melden</div></div></div>
-      <div class="stepper">
-        <button type="button" data-t="p" data-d="-1">−</button>
-        <input id="pv" type="number" inputmode="numeric" min="0" step="60" placeholder="—">
-        <button type="button" data-t="p" data-d="1">+</button>
-      </div>
-    </div>
-    <div class="amt w">
-      <div class="top"><div class="em">🌿</div><div><div class="nm">Wieseneier</div><div class="hint">leer lassen = nicht melden</div></div></div>
-      <div class="stepper">
-        <button type="button" data-t="w" data-d="-1">−</button>
-        <input id="wv" type="number" inputmode="numeric" min="0" step="60" placeholder="—">
-        <button type="button" data-t="w" data-d="1">+</button>
-      </div>
+    <div class="lbl">Packstelle</div>
+    <div class="pscard">
+      <div class="psrow"><div class="psic">📦</div><select id="ps"></select></div>
+      <div class="pshint" id="psHint"></div>
     </div>
   </div>
 
-  <footer>Wanderhuhn Eiermeldung · v1.0</footer>
-</div>
-
-<div class="bar"><div class="inner">
-  <div class="warn" id="warn">Bitte einen Tag und mindestens eine Menge angeben.</div>
-  <button class="send" id="send">Meldung senden</button>
-</div></div>
-
-<!-- Confirmation -->
-<div class="done" id="done">
-  <div class="check"><svg viewBox="0 0 100 100"><path d="M26 52l16 16 32-34"/></svg></div>
-  <h2 id="doneTitle">Danke!</h2>
-  <div class="sum" id="doneSum"></div>
-  <div class="msg" id="doneMsg">Deine Meldung ist bei der Kommissionierung angekommen.</div>
-  <div class="acts">
-    <button class="btn2" id="editAgain">Ändern</button>
-    <button class="btn2 pri" id="newOne">Fertig</button>
+  <div class="sec"><div class="lbl">Was meldest du?</div>
+    <div class="seg">
+      <button class="pg on" id="btnP" type="button"><span><span class="dot o"></span>Prognose</span><small>voraussichtlich</small></button>
+      <button class="fi" id="btnF" type="button"><span><span class="dot g"></span>Liefermenge</span><small>final &amp; verbindlich</small></button>
+    </div>
+    <div class="segHint" id="segHint">Prognose = Schätzung, jederzeit änderbar. Wird orange geführt.</div>
   </div>
+
+  <div class="sec" id="weekSec" style="display:none"><div class="lbl">Diese Woche gemeldet</div><div class="wk" id="weekList"></div></div>
+  <div class="sec"><div class="lbl">Für welchen Liefertag?</div><div class="days" id="days"></div></div>
+  <div class="sec"><div class="lbl"><span>Wie viele Eier?</span><span class="sub" id="stallInfo"></span></div>
+    <div id="mengen"></div><div id="sumBox"></div></div>
+  <div class="sec" id="vpSec" style="display:none"><div class="lbl"><span>Verpackung</span><span class="sub" id="vpInfo"></span></div>
+    <div class="vpcard"><div class="vphead"><span class="tt" id="vpMode">Vorschlag der App</span><button class="vplink" id="vpToggle" type="button">Anpassen</button></div><div id="vpRows"></div><div class="vpcalc" id="vpCalc"></div>
+      <div class="vpnote"><b>Vorschlag der App</b> – berechnet aus der gemeldeten Menge, so dass möglichst wenig Eier lose bleiben. IFCO: 6er = 120 Eier, 10er = 140 Eier (laut Formel in AL Mo).</div></div></div>
+  <div class="sec" id="mhdSec" style="display:none"><div class="lbl">Mindesthaltbarkeit</div>
+    <div class="mhd"><div class="top"><div class="em">📅</div><div class="nm">MHD dieser Lieferung</div></div>
+      <input type="date" id="mhd">
+      <div class="hint">Vorschlag: <b>Legedatum + 28 Tage</b> <span class="tag">Vorlage folgt</span><br>Wird pro Betrieb individuell hinterlegt — nur bei finaler Liefermenge nötig.</div></div></div>
+  <footer>Wanderhuhn Eiermeldung · Entwurf v2<br>Packstellen &amp; Zeilen aus „Kommissionierung_KW 25_2026" · Ställe aus dem Management-Dashboard (Stand 27.05.2026)</footer>
 </div>
-
-<!-- Farm picker -->
-<div class="pick" id="pick"><div class="sheet">
-  <h3>Welcher Betrieb bist du?</h3>
-  <p>Einmal auswählen – die App merkt es sich. (Am besten bekommst du einen fertigen Link mit deinem Betrieb.)</p>
-  <div class="grid" id="pickGrid"></div>
-</div></div>
-
+<div class="bar"><div class="inner"><button class="send" id="send">Prognose senden</button></div></div>
+<div class="done" id="done"><div class="check"><svg viewBox="0 0 100 100"><path d="M26 52l16 16 32-34"/></svg></div>
+  <h2 id="doneTitle">Danke!</h2><div class="badge" id="doneBadge">Prognose</div>
+  <div class="card" id="doneSum"></div><div class="msg" id="doneMsg"></div>
+  <div class="acts"><button class="btn2" id="editAgain">Ändern</button><button class="btn2 pri" id="newOne">Fertig</button></div></div>
+<div class="pick" id="pick"><div class="sheet"><h3>Welcher Betrieb bist du?</h3>
+  <p>Einmal auswählen – die App merkt es sich. Gruppiert nach Packstelle.</p><div id="pickGrid"></div></div></div>
 <script>
-/* ============================================================
-   KONFIGURATION  – hier alles Wichtige an einer Stelle
-   ============================================================ */
+/* Packstelle + Sheet-Zeile + LW-Nummer + Liefertag: aus "Kommissionierung_KW 25_2026.xlsm" (Reiter AL Mo, Spalte E = Packstelle als Gruppenkopf).
+   Ställe (echte Stallnummern + Hennen): aus dem Management-Dashboard, Stand 27.05.2026.
+   Stall-Aufteilung existiert NUR in der App – ins Sheet geht die Summe auf die Betriebszeile. */
 const CONFIG = {
-  // DEMO=true: es wird NICHTS geschrieben, nur die Bestätigung gezeigt (sicher zum Herzeigen).
-  // Auf false stellen, sobald live in die Kommissionierung geschrieben werden soll.
-  // LIVE-TEST aktiv: schreibt in die Test-Kopie, NICHT in die echte Kommissionierung.
-  // Fuer Produktion: demo:false lassen und spreadsheetId auf die echte KW-Datei setzen.
-  demo: false,
-  webhook: "https://hook.eu1.make.com/xwwe55ab32tfx55076fsovxbsa12prun",
-  spreadsheetId: "1LXb2tMdL8nRSLLW1hn9HtOKFgA1_0t3eV-U3EIbj2P4", // Kommissionierung_PILOT_App (1zu1 Kopie des echten KW25-Sheets)
-  colPremium: "H", colWiesen: "I",
-  stepP: 60, stepW: 60,
-  // Betrieb -> Zeile im Sheet + Standard-Liefertag (aus den Stammdaten)
-  farms: {
-    "Emathinger":{row:8,day:"Mo"}, "Petscharnig":{row:10,day:"Do"}, "Gölzner":{row:13,day:""},
-    "Rechling":{row:18,day:""}, "Rapatz":{row:21,day:"Do"}, "Brandner":{row:25,day:""},
-    "Schwab":{row:26,day:""}, "Brandhuber":{row:27,day:""}, "Gschwendtner":{row:28,day:""},
-    "Spitzer":{row:29,day:""}, "Schinwald":{row:30,day:""}, "Lugstein":{row:31,day:""},
-    "Hofer":{row:35,day:""}, "Hutterer":{row:36,day:""}, "Denk":{row:40,day:""},
-    "Hofmann":{row:41,day:""}, "Berer":{row:42,day:""}, "Spitaler":{row:43,day:""},
-    "Habetswallner":{row:44,day:""}, "Rögl":{row:45,day:""}, "Pommer":{row:50,day:""},
-    "Riefler":{row:51,day:""}, "Denk Moni":{row:52,day:""}, "Wagner":{row:56,day:""},
-    "Strobl":{row:57,day:""}, "Leithner":{row:58,day:""}, "Zauner D":{row:62,day:""},
-    "Zauner G":{row:63,day:""}, "Peham":{row:64,day:""}, "Sonnleitner":{row:69,day:""}
-  }
-};
+  /* demo:true = nichts wird zentral geschrieben (Entwurf, sicher zum Herzeigen).
+     demo:false = Prognose wird live in die Kommissionierung geschrieben (Spalten H/I = "Prognose Premium"/"Prognose Wiese").
+     Final/MHD/Verpackung werden bewusst NICHT geschrieben - Zielspalten sind noch offen. */
+  demo:false,
+  webhook:"https://script.google.com/macros/s/AKfycbyZQeYX-5cgV2EpKfVFB4ZZBMdfFPHNhqstR6LySXgqi1iCKXfK_NHNxzXHAWbhM3bn/exec",
+  token:"wh2026",
+  spreadsheetId:"1LXb2tMdL8nRSLLW1hn9HtOKFgA1_0t3eV-U3EIbj2P4", // Kommissionierung_PILOT_App
+  colPremium:"H", colWiesen:"I", mhdTageStandard:28,
+  /* Eier je GVE – aus den Formeln in AL Mo (M8/AB8): 6er=120, 10er=140 */
+  eierProGVE:{ sechser:120, zehner:140 },
+  packstellen: ["Aichkirchen", "Brückl", "Enns", "Gersdorf", "Griffen", "Köstendorf", "Michaelnb.", "Moosbach", "Moosdorf", "Mörschwang", "Natternbach", "Neuhofen"], farms: {"Emathinger": {"row": 8, "nummer": "158", "packstelle": "Aichkirchen", "day": "Mo", "staelle": [{"nr": 38, "hens": 1280}]}, "Petscharnig": {"row": 10, "nummer": "67", "packstelle": "Brückl", "day": "Do", "staelle": [{"nr": 30, "hens": 1300}]}, "Gölzner": {"row": 13, "nummer": "25008", "packstelle": "Enns", "day": "", "staelle": [{"nr": 5, "hens": 1298}, {"nr": 6, "hens": 1298}]}, "Rechling": {"row": 18, "nummer": "95", "packstelle": "Gersdorf", "day": "", "staelle": [{"nr": 35, "hens": 1298}, {"nr": 37, "hens": 1298}, {"nr": 43, "hens": 599}, {"nr": 44, "hens": 599}]}, "Rapatz": {"row": 21, "nummer": "66", "packstelle": "Griffen", "day": "Do", "staelle": [{"nr": 34, "hens": 1300}, {"nr": 39, "hens": 1300}]}, "Brandner": {"row": 25, "nummer": "25012", "packstelle": "Köstendorf", "day": "", "staelle": [{"nr": 21, "hens": 1298}]}, "Schwab": {"row": 26, "nummer": "33", "packstelle": "Köstendorf", "day": "", "staelle": [{"nr": 23, "hens": 1280}]}, "Brandhuber": {"row": 27, "nummer": "54", "packstelle": "Köstendorf", "day": "", "staelle": [{"nr": 26, "hens": 1292}]}, "Gschwendtner": {"row": 28, "nummer": "94", "packstelle": "Köstendorf", "day": "", "staelle": [{"nr": 33, "hens": 1300}], "unklar": true}, "Spitzer": {"row": 29, "nummer": "104", "packstelle": "Köstendorf", "day": "", "staelle": [{"nr": 33, "hens": 1295}]}, "Schinwald": {"row": 30, "nummer": "201", "packstelle": "Köstendorf", "day": "", "staelle": [{"nr": 41, "hens": 1300}]}, "Lugstein": {"row": 31, "nummer": "258", "packstelle": "Köstendorf", "day": "", "staelle": [{"nr": 45, "hens": 1288}]}, "Hofer": {"row": 35, "nummer": "25010", "packstelle": "Michaelnb.", "day": "", "staelle": [{"nr": 18, "hens": 1300}]}, "Hutterer": {"row": 36, "nummer": "58", "packstelle": "Michaelnb.", "day": "", "staelle": [{"nr": 28, "hens": 1285}]}, "Denk": {"row": 40, "nummer": "25001", "packstelle": "Moosbach", "day": "", "staelle": [{"nr": 3, "hens": 1281}, {"nr": 7, "hens": 1300}]}, "Hofmann": {"row": 41, "nummer": "25002", "packstelle": "Moosbach", "day": "", "staelle": [{"nr": 11, "hens": 1304}, {"nr": 13, "hens": 1300}]}, "Berer": {"row": 42, "nummer": "25003", "packstelle": "Moosbach", "day": "", "staelle": [{"nr": 12, "hens": 1300}]}, "Spitaler": {"row": 43, "nummer": "57", "packstelle": "Moosbach", "day": "", "staelle": [{"nr": 29, "hens": 1300}]}, "Habetswall.": {"row": 44, "nummer": "71", "packstelle": "Moosbach", "day": "", "staelle": [{"nr": 31, "hens": 1300}]}, "Rögl": {"row": 45, "nummer": "", "packstelle": "Moosbach", "day": "", "staelle": [{"nr": 46, "hens": 1298}]}, "Pommer": {"row": 50, "nummer": "150", "packstelle": "Moosdorf", "day": "", "staelle": [{"nr": 14, "hens": 1300}]}, "Riefler": {"row": 51, "nummer": "53", "packstelle": "Moosdorf", "day": "", "staelle": [{"nr": 27, "hens": 1263}], "unklar": true}, "Denk Monika": {"row": 52, "nummer": "", "packstelle": "Moosdorf", "day": "", "staelle": [{"nr": 42, "hens": 896}]}, "Wagner": {"row": 56, "nummer": "155", "packstelle": "Mörschwang", "day": "", "staelle": [{"nr": 9, "hens": 1287}, {"nr": 10, "hens": 1287}]}, "Strobl": {"row": 57, "nummer": "25011", "packstelle": "Mörschwang", "day": "", "staelle": [{"nr": 19, "hens": 1298}, {"nr": 20, "hens": 1299}]}, "Leithner": {"row": 58, "nummer": "36", "packstelle": "Mörschwang", "day": "", "staelle": [{"nr": 24, "hens": 1298}]}, "Zauner D": {"row": 62, "nummer": "25006", "packstelle": "Natternbach", "day": "", "staelle": [{"nr": 8, "hens": 1299}, {"nr": 15, "hens": 1300}]}, "Zauner G": {"row": 63, "nummer": "25005", "packstelle": "Natternbach", "day": "", "staelle": [{"nr": 25, "hens": 1299}]}, "Peham": {"row": 64, "nummer": "76", "packstelle": "Natternbach", "day": "", "staelle": [{"nr": 40, "hens": 1300}]}, "Sonnleitner": {"row": 69, "nummer": "251", "packstelle": "Neuhofen", "day": "", "staelle": [{"nr": 16, "hens": 1298}, {"nr": 17, "hens": 1299}]}} };
+/* Verpackungs-Fähigkeiten je Landwirt – Reiter "Verpackungen" der Kommissionierungs-Excel */
+const VP = {"Emathinger": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 1400}, "Petscharnig": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 1020}, "Gölzner": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 2000}, "Rapatz": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 1316}, "Rechling": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 2550}, "Brandner": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 850}, "Schwab": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 740}, "Brandhuber": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 700}, "Gschwendtner": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 370}, "Spitzer": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 124}, "Schinwald": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 400}, "Lugstein": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": false, "band": 530}, "Hofer": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 1550}, "Hutterer": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 350}, "Denk": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 500}, "Hofmann": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": null}, "Berer": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 260}, "Spitaler": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 452}, "Habetswall.": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 550}, "Rögl": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 233}, "Pommer": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 473}, "Riefler": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 500}, "Denk Monika": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 230}, "Wagner": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 2775}, "Strobl": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 335}, "Leithner": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 1284}, "Zauner D": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 1450}, "Zauner G": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 250}, "Peham": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": true, "band": 51}, "Sonnleitner": {"p6": true, "w6": true, "p10": true, "w10": true, "spar": false, "band": 2700}};
 const DAYS=["Mo","Di","Mi","Do","Fr"];
 const DAYNAME={Mo:"Montag",Di:"Dienstag",Mi:"Mittwoch",Do:"Donnerstag",Fr:"Freitag"};
 const MONTHS=["Jänner","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
-
-/* ---------- Helfer ---------- */
-const $=s=>document.querySelector(s);
+const $=s=>document.querySelector(s); const fmt=n=>n.toLocaleString("de-DE");
 function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}}
-function isoWeek(d){const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
-  const dn=(t.getUTCDay()+6)%7;t.setUTCDate(t.getUTCDate()-dn+3);
-  const f=new Date(Date.UTC(t.getUTCFullYear(),0,4));
-  return 1+Math.round(((t-f)/86400000-3+((f.getUTCDay()+6)%7))/7);}
-function fmt(n){return n.toLocaleString("de-DE");}
+function isoWeek(d){const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const dn=(t.getUTCDay()+6)%7;t.setUTCDate(t.getUTCDate()-dn+3);const f=new Date(Date.UTC(t.getUTCFullYear(),0,4));return 1+Math.round(((t-f)/86400000-3+((f.getUTCDay()+6)%7))/7);}
 function todayDayCode(){const j=new Date().getDay();return [null,"Mo","Di","Mi","Do","Fr",null][j]||"Mo";}
+let state={farm:null,day:null,mode:"prognose",week:{},vpManual:null};
+/* Speicher: je Betrieb + Kalenderwoche, ueberlebt Neuladen und Home-Bildschirm */
+function weekKey(f){ return "wh2_"+f+"_"+isoWeek(new Date()); }
+function loadWeek(f){ try{ return JSON.parse(ls(weekKey(f))||"{}")||{}; }catch(e){ return {}; } }
+function saveWeek(){ try{ ls(weekKey(state.farm), JSON.stringify(state.week)); }catch(e){} }
+const farmOf=()=>CONFIG.farms[state.farm]||{staelle:[]};
 
-/* ---------- Zustand ---------- */
-let state={farm:null, day:null, editing:false};
-
-/* ---------- Wochen-Speicher (pro Betrieb + KW) ---------- */
-function weekKey(){return "wh_week_"+state.farm+"_"+isoWeek(new Date());}
-function loadWeek(){try{return JSON.parse(ls(weekKey())||"{}")||{};}catch(e){return {};}}
-function renderWeek(){
-  const wk=loadWeek(), sec=$("#weekSec"), list=$("#weekList");
-  const days=DAYS.filter(d=>wk[d]);
-  if(!days.length){ sec.style.display="none"; return; }
-  sec.style.display="block"; list.innerHTML="";
-  days.forEach(d=>{
-    const e=wk[d], parts=[];
-    if(e.p!=null)parts.push("P "+fmt(e.p)); if(e.w!=null)parts.push("W "+fmt(e.w));
-    const row=document.createElement("div"); row.className="wkrow";
-    row.innerHTML=`<div class="d">${d}</div><div class="vv">${parts.join(" · ")||"<small>—</small>"}</div>`
-      +(e.changed?`<span class="bdg">geändert</span>`:``)
-      +`<button class="ed">Ändern</button>`;
-    row.querySelector(".ed").onclick=()=>editDay(d);
-    list.appendChild(row);
-  });
+/* Wochen-Routing — nachgewiesen an den echten Meldungen vom 15.-18.06.2026:
+   Eine am DONNERSTAG gesendete "AL Mo"-Meldung meint den Montag der FOLGEWOCHE
+   und gehoert damit in die naechste Wochendatei. Aus einer Chat-Woche werden zwei
+   Zieldateien. Frueher musste das jemand im Kopf mitfuehren - jetzt rechnet es die App. */
+const DAYNUM={Mo:1,Di:2,Mi:3,Do:4,Fr:5};
+function abholung(tag){
+  const heute=new Date(); heute.setHours(0,0,0,0);
+  const hd=heute.getDay()===0?7:heute.getDay();     // So=7
+  let delta=DAYNUM[tag]-hd;
+  if(delta<=0) delta+=7;                            // gemeldeter Tag ist immer der naechste kuenftige
+  const d=new Date(heute.getTime()+delta*86400000);
+  return {datum:("0"+d.getDate()).slice(-2)+"."+("0"+(d.getMonth()+1)).slice(-2)+"."+d.getFullYear(),
+          kw:isoWeek(d), date:d};
 }
-function editDay(d){ selectDay(d); $("#pv").scrollIntoView({behavior:"smooth",block:"center"}); }
+const staelle=()=>farmOf().staelle||[];
 
-/* ---------- Betrieb bestimmen ---------- */
-function resolveFarm(){
-  const p=new URLSearchParams(location.search);
-  let q=(p.get("betrieb")||p.get("b")||"").trim();
-  if(!q){ q=ls("wh_farm")||""; }
-  if(!q) return null;
-  const keys=Object.keys(CONFIG.farms);
-  let hit=keys.find(k=>k.toLowerCase()===q.toLowerCase());
-  if(!hit) hit=keys.find(k=>k.toLowerCase().startsWith(q.toLowerCase()));
-  return hit||null;
+/* Packstelle */
+function buildPS(){ const s=$("#ps"); s.innerHTML="";
+  CONFIG.packstellen.forEach(p=>{const o=document.createElement("option");o.value=p;o.textContent=p;s.appendChild(o);});
+  s.onchange=updatePSHint;
 }
-function setFarm(name){
-  state.farm=name; ls("wh_farm",name);
-  $("#greet").textContent="Servus, "+name+" 👋";
-  const std=CONFIG.farms[name].day||todayDayCode();
-  selectDay(std);            // prefüllt Werte für den Tag (siehe selectDay)
-  renderWeek();
-  $("#pick").classList.remove("show");
+function updatePSHint(){
+  const std=farmOf().packstelle, cur=$("#ps").value;
+  $("#psHint").innerHTML = (cur===std)
+    ? 'Standard für <b>'+(state.farm||"")+'</b>. Nur ändern, wenn du ausnahmsweise woanders hin lieferst.'
+    : '<span class="warnps">Abweichend!</span> Standard wäre <b>'+std+'</b>.';
 }
-
-/* ---------- Tage rendern ---------- */
-function renderDays(){
-  const wrap=$("#days"); wrap.innerHTML="";
+function setMode(m){ state.mode=m; document.body.classList.toggle("final",m==="final");
+  $("#btnP").classList.toggle("on",m==="prognose"); $("#btnF").classList.toggle("on",m==="final");
+  $("#send").textContent = m==="final"?"Liefermenge senden":"Prognose senden";
+  $("#mhdSec").style.display = m==="final"?"block":"none";
+  $("#segHint").textContent = m==="final"?"Finale Liefermenge — verbindlich. Wird grün geführt, MHD wird mitgegeben."
+                                         :"Prognose = Schätzung, jederzeit änderbar. Wird orange geführt.";
+  renderWeek(); }
+$("#btnP").onclick=()=>setMode("prognose"); $("#btnF").onclick=()=>setMode("final");
+function renderDays(){ const wrap=$("#days"); wrap.innerHTML="";
   const now=new Date(); const monday=new Date(now); monday.setDate(now.getDate()-((now.getDay()+6)%7));
-  DAYS.forEach((d,i)=>{
-    const dt=new Date(monday); dt.setDate(monday.getDate()+i);
+  DAYS.forEach((d,i)=>{ const dt=new Date(monday); dt.setDate(monday.getDate()+i);
     const el=document.createElement("div"); el.className="day"; el.dataset.day=d;
-    el.innerHTML=`<span class="dd">${d}</span><span class="dn">${dt.getDate()}.${dt.getMonth()+1}.</span>`;
-    el.onclick=()=>selectDay(d);
-    wrap.appendChild(el);
-  });
-}
+    el.innerHTML='<span>'+d+'</span><span class="dn">'+dt.getDate()+'.'+(dt.getMonth()+1)+'.</span>';
+    el.onclick=()=>selectDay(d); wrap.appendChild(el); }); }
 function selectDay(d){ state.day=d;
   document.querySelectorAll(".day").forEach(e=>e.classList.toggle("on",e.dataset.day===d));
-  const wk=loadWeek(), cur=wk[d];
-  if(cur){ $("#pv").value=(cur.p==null?"":cur.p); $("#wv").value=(cur.w==null?"":cur.w); }
-  else { let last=null; try{last=JSON.parse(ls("wh_last_"+state.farm)||"null");}catch(e){}
-    $("#pv").value=(last&&last.p!=null?last.p:""); $("#wv").value=(last&&last.w!=null?last.w:""); }
-  hideWarn();}
-
-/* ---------- KW / Kopf ---------- */
-function renderHead(){
+  const rec=state.week[d]; fillInputs(rec&&rec.mode===state.mode?rec.staelle:null);
+  state.vpManual = (rec && rec.vp && rec.vp.manual) ? {p6:rec.vp.p.sechser,p10:rec.vp.p.zehner,w6:rec.vp.w.sechser,w10:rec.vp.w.zehner} : null;
+  if(typeof renderVpCalc==="function") renderVpCalc(); }
+function renderMengen(){ const st=staelle(), box=$("#mengen"); box.innerHTML="";
+  $("#stallInfo").textContent = st.length>1 ? st.length+" Ställe: "+st.map(s=>"Nr. "+s.nr).join(", ") : (st.length===1?"Stall Nr. "+st[0].nr:"");
+  if(st.length<=1){ const hens = st.length?" · "+fmt(st[0].hens)+" Hennen":"";
+    box.innerHTML='<div class="amt p"><div class="top"><div class="em">🥚</div><div><div class="nm">Premium-Eier</div><div class="hint">leer lassen = nicht melden'+hens+'</div></div></div><div class="stepper"><button type="button" data-t="s0p" data-d="-1">−</button><input id="s0p" type="number" inputmode="numeric" min="0" step="60" placeholder="—"><button type="button" data-t="s0p" data-d="1">+</button></div></div><div class="amt w"><div class="top"><div class="em">🌿</div><div><div class="nm">Wieseneier</div><div class="hint">leer lassen = nicht melden</div></div></div><div class="stepper"><button type="button" data-t="s0w" data-d="-1">−</button><input id="s0w" type="number" inputmode="numeric" min="0" step="60" placeholder="—"><button type="button" data-t="s0w" data-d="1">+</button></div></div>';
+  } else { st.forEach((s,i)=>{ const d=document.createElement("div"); d.className="stall";
+      d.innerHTML='<div class="stallHead"><div class="ic">'+s.nr+'</div><div class="nm">Stall '+s.nr+'</div><div class="cap">'+fmt(s.hens)+' Hennen</div></div><div class="duo"><div class="fld"><div class="fl">🥚 Premium</div><input id="s'+i+'p" type="number" inputmode="numeric" min="0" step="60" placeholder="—"></div><div class="fld"><div class="fl">🌿 Wiesen</div><input id="s'+i+'w" type="number" inputmode="numeric" min="0" step="60" placeholder="—"></div></div>';
+      box.appendChild(d); }); }
+  box.querySelectorAll(".stepper button").forEach(b=>{ b.onclick=()=>{const inp=document.getElementById(b.dataset.t);let v=parseInt(inp.value||"0",10);if(isNaN(v))v=0;inp.value=Math.max(0,v+60*parseInt(b.dataset.d,10));renderSum();}; });
+  box.querySelectorAll("input").forEach(i=>i.addEventListener("input",()=>{renderSum();renderVpCalc();})); renderSum(); }
+function readStaelle(){ const st=staelle(), n=Math.max(st.length,1), out=[];
+  for(let i=0;i<n;i++){ const p=document.getElementById("s"+i+"p"), w=document.getElementById("s"+i+"w");
+    out.push({nr:st[i]?st[i].nr:null, p:(p&&p.value.trim()!=="")?Math.max(0,parseInt(p.value,10)):null, w:(w&&w.value.trim()!=="")?Math.max(0,parseInt(w.value,10)):null}); }
+  return out; }
+function fillInputs(prev){ const n=Math.max(staelle().length,1);
+  for(let i=0;i<n;i++){ const p=document.getElementById("s"+i+"p"), w=document.getElementById("s"+i+"w");
+    if(p)p.value=prev&&prev[i]&&prev[i].p!=null?prev[i].p:""; if(w)w.value=prev&&prev[i]&&prev[i].w!=null?prev[i].w:""; } renderSum(); }
+function totals(){ const st=readStaelle(); let p=null,w=null; st.forEach(s=>{if(s.p!=null)p=(p||0)+s.p; if(s.w!=null)w=(w||0)+s.w;}); return {p,w,st}; }
+function renderSum(){ const box=$("#sumBox"); if(staelle().length<=1){box.innerHTML="";return;} const t=totals();
+  box.innerHTML='<div class="sum"><div><div class="lb">Summe Betrieb</div><div class="note">geht so in die Kommissionierung</div></div><div class="vals">🥚 '+(t.p==null?"—":fmt(t.p))+' &nbsp;·&nbsp; 🌿 '+(t.w==null?"—":fmt(t.w))+'</div></div>'; }
+function vpOf(){ return VP[state.farm]||{p6:true,w6:true,p10:true,w10:true}; }
+/* Vorschlag: möglichst wenig lose Eier. IFCO: 6er = 120, 10er = 140 Eier. */
+function packVorschlag(q, canSix, canTen){
+  const K=CONFIG.eierProGVE;
+  if(!q || q<=0) return {sechser:0, zehner:0};
+  let best={sechser:0, zehner:0, packed:-1};
+  const maxB = canTen ? Math.floor(q/K.zehner) : 0;
+  for(let bb=maxB; bb>=0; bb--){
+    const aa = canSix ? Math.floor((q - bb*K.zehner)/K.sechser) : 0;
+    if(aa<0) continue;
+    const packed = aa*K.sechser + bb*K.zehner;
+    if(packed>best.packed || (packed===best.packed && bb>best.zehner)) best={sechser:aa, zehner:bb, packed:packed};
+  }
+  return {sechser:best.sechser, zehner:best.zehner};
+}
+function vpAuto(){ const t=totals(), v=vpOf();
+  return { p:packVorschlag(t.p||0, v.p6!==false, v.p10!==false),
+           w:packVorschlag(t.w||0, v.w6!==false, v.w10!==false) }; }
+/* aktuell gueltige Aufteilung: Vorschlag oder manuell angepasst */
+function vpCurrent(){ const t=totals();
+  if(state.vpManual) return {t:t, p:{sechser:state.vpManual.p6, zehner:state.vpManual.p10},
+                                   w:{sechser:state.vpManual.w6, zehner:state.vpManual.w10}, manual:true};
+  const a=vpAuto(); return {t:t, p:a.p, w:a.w, manual:false}; }
+function eierVon(r){ const K=CONFIG.eierProGVE; return r.sechser*K.sechser + r.zehner*K.zehner; }
+function vpSave(){ const c=vpCurrent(); return {manual:c.manual, p:c.p, w:c.w}; }
+function vpStartManual(){ const c=vpCurrent();
+  state.vpManual={p6:c.p.sechser, p10:c.p.zehner, w6:c.w.sechser, w10:c.w.zehner}; renderVpCalc(); }
+function vpReset(){ state.vpManual=null; renderVpCalc(); }
+document.querySelector("#vpToggle").onclick=()=>{ state.vpManual ? vpReset() : vpStartManual(); };
+function vpBump(key,delta){ if(!state.vpManual) vpStartManual();
+  state.vpManual[key]=Math.max(0,(state.vpManual[key]||0)+delta); renderVpCalc(); }
+function renderVerpackung(){ const v=vpOf();
+  document.querySelector("#vpInfo").textContent = v.spar===false ? "kein Spar mobil" : (v.band ? "Band 10er: "+fmt(v.band) : "");
+  renderVpCalc(); }
+function renderVpCalc(){ if(!document.querySelector("#vpRows")) return;
+  const c=vpCurrent(), v=vpOf(), box=document.querySelector("#vpRows");
+  document.querySelector("#vpMode").textContent = c.manual ? "Selbst angepasst" : "Vorschlag der App";
+  document.querySelector("#vpToggle").textContent = c.manual ? "Vorschlag zurück" : "Anpassen";
+  const ges=(c.t.p||0)+(c.t.w||0);
+  if(c.manual){
+    const row=(nm,key,val,show)=> show? '<div class="vpe"><div class="nm">'+nm+'</div>'+
+      '<button type="button" data-k="'+key+'" data-d="-1">−</button><div class="cnt">'+val+'</div>'+
+      '<button type="button" data-k="'+key+'" data-d="1">+</button></div>' : '';
+    box.innerHTML='<div class="vpedit">'+
+      row("🥚 Premium 6er","p6",c.p.sechser, v.p6!==false)+
+      row("🥚 Premium 10er","p10",c.p.zehner, v.p10!==false)+
+      row("🌿 Wiese 6er","w6",c.w.sechser, v.w6!==false)+
+      row("🌿 Wiese 10er","w10",c.w.zehner, v.w10!==false)+'</div>';
+    box.querySelectorAll("button[data-k]").forEach(bt=>{ bt.onclick=()=>vpBump(bt.dataset.k, parseInt(bt.dataset.d,10)); });
+  } else {
+    const line=(icon,name,q,r)=>{
+      if(!q) return '<div class="vprow2"><div class="pl">'+icon+' '+name+'</div><div class="vpv">—</div></div>';
+      const parts=[]; const rest=q-eierVon(r);
+      if(r.sechser) parts.push('<b>'+r.sechser+'</b> × 6er-IFCO');
+      if(r.zehner)  parts.push('<b>'+r.zehner+'</b> × 10er-IFCO');
+      return '<div class="vprow2"><div class="pl">'+icon+' '+name+'<small>'+fmt(q)+' Eier gemeldet</small></div>'+
+        '<div class="vpv">'+(parts.join(' + ')||'zu wenig für eine Box')+
+        (rest ? '<span class="rst">'+fmt(rest)+' lose</span>' : '<span class="ok">kein Rest</span>')+'</div></div>';
+    };
+    box.innerHTML = line("🥚","Premium", c.t.p||0, c.p) + line("🌿","Wiese", c.t.w||0, c.w);
+  }
+  const boxes=c.p.sechser+c.p.zehner+c.w.sechser+c.w.zehner;
+  const packed=eierVon(c.p)+eierVon(c.w), rest=ges-packed;
+  document.querySelector("#vpCalc").innerHTML = ges
+    ? '<b>'+boxes+'</b> IFCO-Boxen gesamt &nbsp;·&nbsp; verpackt <b>'+fmt(packed)+'</b> von '+fmt(ges)+' Eiern &nbsp;·&nbsp; '+
+      (rest<0 ? '<b class="neg">'+fmt(-rest)+' Eier zu viel verpackt ⚠️</b>' : 'lose <b>'+fmt(rest)+'</b>')
+    : 'Sobald du Mengen einträgst, schlage ich die Verpackung vor.';
+}
+function renderWeek(){ const sec=$("#weekSec"), list=$("#weekList"); const days=DAYS.filter(d=>state.week[d]);
+  if(!days.length){sec.style.display="none";return;} sec.style.display="block"; list.innerHTML="";
+  days.forEach(d=>{ const r=state.week[d], g=r.mode==="final", parts=[];
+    if(r.p!=null)parts.push("P "+fmt(r.p)); if(r.w!=null)parts.push("W "+fmt(r.w));
+    const row=document.createElement("div"); row.className="wkrow";
+    row.innerHTML='<div class="d '+(g?'g':'o')+'">'+d+'</div><div class="vv">'+(parts.join(" · ")||"—")+'</div><span class="st '+(g?'g':'o')+'">'+(g?'Final':'Prognose')+'</span><button class="ed">Ändern</button>';
+    row.querySelector(".ed").onclick=()=>{setMode(r.mode);selectDay(d);window.scrollTo({top:0,behavior:'smooth'});};
+    list.appendChild(row); }); }
+$("#send").onclick=async ()=>{ if(!state.farm){$("#pick").classList.add("show");return;}
+  if(!state.day){alert("Bitte einen Liefertag wählen.");return;}
+  const t=totals(); if(t.p==null&&t.w==null){alert("Bitte mindestens eine Menge eintragen.");return;}
+  state.week[state.day]={p:t.p,w:t.w,mode:state.mode,staelle:t.st,mhd:$("#mhd").value,ps:$("#ps").value,vp:vpSave(), ts:Date.now()};
+  saveWeek(); renderWeek();
+  let zentral=false;
+  if(!CONFIG.demo){
+    const ab=abholung(state.day);   // <- Wochen-Routing: Do-Meldung fuer "Mo" meint die Folgewoche
+    const q=new URLSearchParams({
+      token:CONFIG.token, tag:state.day, lw:state.farm, packstelle:$("#ps").value,
+      status:state.mode, zielwoche:ab.kw, abholung:ab.datum
+    });
+    if(t.p!=null) q.set("premium",t.p);
+    if(t.w!=null) q.set("wiesen",t.w);
+    if(state.mode==="final" && $("#mhd").value) q.set("mhd",$("#mhd").value.split("-").reverse().join("."));
+    const st=(t.st||[]).filter(s=>s.p!=null||s.w!=null).map(s=>"Stall "+s.nr+": P"+(s.p||0)+" W"+(s.w||0));
+    if(st.length>1) q.set("staelle",st.join(" | "));
+    const cv=vpCurrent(); const vp=[];
+    if(cv.p.sechser) vp.push("P6er x"+cv.p.sechser); if(cv.p.zehner) vp.push("P10er x"+cv.p.zehner);
+    if(cv.w.sechser) vp.push("W6er x"+cv.w.sechser); if(cv.w.zehner) vp.push("W10er x"+cv.w.zehner);
+    if(vp.length) q.set("verpackung",vp.join(" | ")+(cv.manual?" (vom Landwirt angepasst)":""));
+    const url=CONFIG.webhook+"?"+q.toString();
+    $("#send").disabled=true; $("#send").textContent="Sende\u2026";
+    try{ await fetch(url,{mode:"no-cors"}); zentral=true; }
+    catch(err){ await new Promise(res=>{ const im=new Image(); im.onload=im.onerror=res; im.src=url; setTimeout(res,4000); }); zentral=true; }
+    $("#send").disabled=false; setMode(state.mode);
+  }
+  window._zentral=zentral;
+  const g=state.mode==="final", std=farmOf().packstelle, ps=$("#ps").value;
+  const _ab=abholung(state.day);
+  const rows=['<div class="r"><span class="k">Abholung 🚚</span><b>'+DAYNAME[state.day]+', '+_ab.datum+'</b></div>',
+              '<div class="r"><span class="k">Wochendatei</span><b>KW '+_ab.kw+'</b></div>',
+              '<div class="r"><span class="k">Packstelle 📦</span><b>'+ps+(ps!==std?' ⚠️':'')+'</b></div>'];
+  if(staelle().length>1) t.st.forEach(s=>{ if(s.p!=null||s.w!=null)
+    rows.push('<div class="r"><span class="k">Stall '+s.nr+'</span><b>'+(s.p!=null?"P "+fmt(s.p):"")+(s.w!=null?(s.p!=null?" · ":"")+"W "+fmt(s.w):"")+'</b></div>'); });
+  if(t.p!=null) rows.push('<div class="r"><span class="k">Premium gesamt 🥚</span><b>'+fmt(t.p)+'</b></div>');
+  if(t.w!=null) rows.push('<div class="r"><span class="k">Wiesen gesamt 🌿</span><b>'+fmt(t.w)+'</b></div>');
+  const cc=vpCurrent(), bx=cc.p.sechser+cc.p.zehner+cc.w.sechser+cc.w.zehner;
+  const rst=((cc.t.p||0)+(cc.t.w||0))-(eierVon(cc.p)+eierVon(cc.w));
+  if(bx){ const pp=[];
+    if(cc.p.sechser) pp.push("P 6er×"+cc.p.sechser); if(cc.p.zehner) pp.push("P 10er×"+cc.p.zehner);
+    if(cc.w.sechser) pp.push("W 6er×"+cc.w.sechser); if(cc.w.zehner) pp.push("W 10er×"+cc.w.zehner);
+    rows.push('<div class="r"><span class="k">Verpackung 📦'+(cc.manual?" (angepasst)":"")+'</span><b>'+pp.join(" · ")+'</b></div>');
+    rows.push('<div class="r"><span class="k">IFCO gesamt</span><b>'+bx+' Boxen'+(rst>0?' · '+fmt(rst)+' lose':(rst<0?' · '+fmt(-rst)+' zu viel ⚠️':''))+'</b></div>'); }
+  if(g&&$("#mhd").value) rows.push('<div class="r"><span class="k">MHD 📅</span><b>'+$("#mhd").value.split("-").reverse().join(".")+'</b></div>');
+  $("#doneSum").innerHTML=rows.join(""); $("#doneTitle").textContent="Danke, "+state.farm+"!";
+  $("#doneBadge").textContent=g?"Finale Liefermenge":"Prognose";
+  $("#doneMsg").innerHTML = window._zentral
+    ? "In die Kommissionierung KW " + _ab.kw + " übertragen — " + (g ? "grün (finale Menge)." : "orange (Prognose).")
+    : "<b>Lokal gespeichert.</b> Zentrale Übertragung ist aus (demo:true).";
+  $("#done").classList.add("show"); };
+$("#newOne").onclick=()=>$("#done").classList.remove("show");
+$("#editAgain").onclick=()=>$("#done").classList.remove("show");
+function setFarm(n){ state.farm=n; ls("wh_farm",n); state.week=loadWeek(n);
+  const f=CONFIG.farms[n]; $("#greet").textContent="Servus, "+n+" 👋";
+  $("#ps").value=f.packstelle; updatePSHint();
+  renderMengen(); renderWeek(); selectDay(f.day||todayDayCode());
+  $("#pick").classList.remove("show"); buildPicker(); }
+function buildPicker(){ const g=$("#pickGrid"); g.innerHTML="";
+  CONFIG.packstellen.forEach(p=>{
+    const names=Object.keys(CONFIG.farms).filter(n=>CONFIG.farms[n].packstelle===p);
+    if(!names.length) return;
+    const h=document.createElement("div"); h.className="grp"; h.textContent="📦 "+p; g.appendChild(h);
+    const grid=document.createElement("div"); grid.className="grid";
+    names.forEach(n=>{ const st=CONFIG.farms[n].staelle||[];
+      const b=document.createElement("button");
+      b.innerHTML=n+'<small>'+(st.length>1?st.length+" Ställe ("+st.map(s=>s.nr).join(", ")+")":(st.length?"Stall "+st[0].nr:"kein Stall"))+'</small>';
+      if(n===state.farm) b.classList.add("on");
+      b.onclick=()=>setFarm(n); grid.appendChild(b); });
+    g.appendChild(grid); }); }
+$("#changeFarm").onclick=e=>{e.preventDefault();$("#pick").classList.add("show");};
+(function init(){ const p=new URLSearchParams(location.search);
+  let q=(p.get("betrieb")||p.get("b")||"").trim()||ls("wh_farm")||"";
+  const keys=Object.keys(CONFIG.farms);
+  const hit=keys.find(k=>k.toLowerCase()===q.toLowerCase())||keys.find(k=>q&&k.toLowerCase().startsWith(q.toLowerCase()));
   const now=new Date();
   $("#kw").textContent="Kalenderwoche "+isoWeek(now)+" · "+now.getDate()+". "+MONTHS[now.getMonth()];
-}
-
-/* ---------- Stepper ---------- */
-document.querySelectorAll(".stepper button").forEach(b=>{
-  b.onclick=()=>{
-    const inp=b.dataset.t==="p"?$("#pv"):$("#wv");
-    const step=b.dataset.t==="p"?CONFIG.stepP:CONFIG.stepW;
-    let v=parseInt(inp.value||"0",10); if(isNaN(v))v=0;
-    v=Math.max(0, v+step*parseInt(b.dataset.d,10));
-    inp.value=v; hideWarn();
-  };
-});
-$("#pv").addEventListener("input",hideWarn); $("#wv").addEventListener("input",hideWarn);
-function hideWarn(){$("#warn").classList.remove("show");}
-
-/* ---------- Senden ---------- */
-$("#send").onclick=async ()=>{
-  const f=state.farm?CONFIG.farms[state.farm]:null;
-  if(!f){ $("#warn").textContent="Bitte zuerst deinen Betrieb wählen."; $("#warn").classList.add("show"); $("#pick").classList.add("show"); return; }
-  const pRaw=$("#pv").value.trim(), wRaw=$("#wv").value.trim();
-  const p=pRaw===""?null:Math.max(0,parseInt(pRaw,10));
-  const w=wRaw===""?null:Math.max(0,parseInt(wRaw,10));
-  if(!state.day || (p===null && w===null)){ $("#warn").textContent="Bitte einen Tag und mindestens eine Menge angeben."; $("#warn").classList.add("show"); return; }
-
-  const wk=loadWeek(); const prev=wk[state.day]||null;
-  const corr = !!prev && ((prev.p??null)!==p || (prev.w??null)!==w);
-  const sheet="AL "+state.day;
-  const calls=[];
-  if(p!==null) calls.push({cell:CONFIG.colPremium+f.row, value:p});
-  if(w!==null) calls.push({cell:CONFIG.colWiesen+f.row, value:w});
-
-  $("#send").disabled=true; $("#send").textContent="Sende…";
-  try{
-    if(!CONFIG.demo){
-      for(const c of calls){
-        const url=`${CONFIG.webhook}?spreadsheet_id=${encodeURIComponent(CONFIG.spreadsheetId)}&sheet=${encodeURIComponent(sheet)}&cell=${c.cell}&value=${c.value}&betrieb=${encodeURIComponent(state.farm)}&korrektur=${corr?1:0}`;
-        try{ await fetch(url,{mode:"no-cors"}); }
-        catch(err){ await new Promise(res=>{ const img=new Image(); img.onload=img.onerror=res; img.src=url; setTimeout(res,4000); }); }
-      }
-    }else{
-      calls.forEach(c=>console.log("[DEMO] würde senden:",
-        `${CONFIG.webhook}?spreadsheet_id=${CONFIG.spreadsheetId}&sheet=${encodeURIComponent(sheet)}&cell=${c.cell}&value=${c.value}`));
-      await new Promise(r=>setTimeout(r,450));
-    }
-    wk[state.day]={p,w,ts:Date.now(),changed:corr||(prev&&prev.changed)||false,prevP:prev?(prev.p??null):null,prevW:prev?(prev.w??null):null};
-    ls(weekKey(), JSON.stringify(wk));
-    ls("wh_last_"+state.farm, JSON.stringify({p,w,day:state.day}));
-    renderWeek();
-    showDone(p,w,{corr,prev});
-  }catch(e){
-    $("#warn").textContent="Senden hat nicht geklappt – bitte Internet prüfen und nochmal."; $("#warn").classList.add("show");
-  }finally{
-    $("#send").disabled=false; $("#send").textContent="Meldung senden";
-  }
-};
-
-/* ---------- Bestätigung ---------- */
-function showDone(p,w,info){
-  info=info||{}; const corr=info.corr, prev=info.prev||{};
-  const pCell=(corr&&prev.p!=null&&prev.p!==p)?`<s>${fmt(prev.p)}</s>→ ${fmt(p)}`:fmt(p);
-  const wCell=(corr&&prev.w!=null&&prev.w!==w)?`<s>${fmt(prev.w)}</s>→ ${fmt(w)}`:fmt(w);
-  const rows=[`<div class="r"><span class="k">Kalenderwoche</span><b>${isoWeek(new Date())}</b></div>`,
-    `<div class="r"><span class="k">Liefertag</span><b>${DAYNAME[state.day]}</b></div>`];
-  if(p!==null) rows.push(`<div class="r"><span class="k">Premium 🥚</span><b>${pCell}</b></div>`);
-  if(w!==null) rows.push(`<div class="r"><span class="k">Wiesen 🌿</span><b>${wCell}</b></div>`);
-  $("#doneSum").innerHTML=rows.join("");
-  $("#doneTitle").textContent = corr ? "Korrektur gespeichert ✎" : ("Danke, "+state.farm+"!");
-  $("#doneMsg").innerHTML = corr
-    ? (CONFIG.demo?"Vorschau — im Echtbetrieb wird die Korrektur übernommen und die Kommissionierung über die Änderung informiert."
-                  :"Korrektur übernommen. Die Kommissionierung wird über die Änderung informiert.")
-    : (CONFIG.demo?"Vorschau — im Echtbetrieb landet das jetzt automatisch in der Kommissionierung."
-                  :"Deine Meldung ist bei der Kommissionierung angekommen. Du kannst sie jederzeit korrigieren.");
-  $("#done").classList.add("show");
-}
-$("#newOne").onclick=()=>{ $("#done").classList.remove("show"); };
-$("#editAgain").onclick=()=>{ $("#done").classList.remove("show"); /* Werte bleiben stehen -> Korrektur */ };
-
-/* ---------- Betrieb-Auswahl ---------- */
-function buildPicker(){
-  const g=$("#pickGrid"); g.innerHTML="";
-  Object.keys(CONFIG.farms).sort((a,b)=>a.localeCompare(b,"de")).forEach(n=>{
-    const b=document.createElement("button"); b.textContent=n; b.onclick=()=>setFarm(n); g.appendChild(b);
-  });
-}
-$("#changeFarm").onclick=e=>{e.preventDefault(); $("#pick").classList.add("show");};
-
-/* ---------- Start ---------- */
-(function init(){
-  if(CONFIG.demo) $("#demoTag").classList.add("show");
-  renderHead(); renderDays(); buildPicker();
-  const f=resolveFarm();
-  if(f){ setFarm(f); } else { selectDay(todayDayCode()); $("#pick").classList.add("show"); }
-})();
-</script>
-</body>
-</html>
+  $("#mhd").value=new Date(now.getTime()+CONFIG.mhdTageStandard*86400000).toISOString().slice(0,10);
+  buildPS(); renderDays(); buildPicker(); setMode("prognose");
+  if(hit){setFarm(hit);} else {$("#pick").classList.add("show");} })();
+</script></body></html>
